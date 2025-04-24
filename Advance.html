@@ -1,0 +1,1339 @@
+<!DOCTYPE html>
+<!-- saved from url=(0083)file:///C:/Users/tangoo/Downloads/storeteam/handyman-marketplace-plan.html#overview -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Handyman Marketplace Development Plan</title>
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2ecc71;
+            --accent-color: #f39c12;
+            --text-color: #333;
+            --light-gray: #f5f5f5;
+            --border-color: #ddd;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: #fff;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        .sidebar {
+            width: 300px;
+            background-color: var(--light-gray);
+            padding: 20px;
+            border-right: 1px solid var(--border-color);
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+        }
+        
+        .content {
+            flex: 1;
+            padding: 30px;
+            margin-left: 300px;
+            max-width: 1200px;
+        }
+        
+        h1 {
+            color: var(--primary-color);
+            margin-bottom: 30px;
+            font-size: 2.5rem;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 10px;
+        }
+        
+        h2 {
+            color: var(--primary-color);
+            margin-top: 40px;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 10px;
+        }
+        
+        h3 {
+            color: var(--secondary-color);
+            margin-top: 30px;
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+        
+        h4 {
+            color: var(--accent-color);
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+        
+        p, ul, ol {
+            margin-bottom: 15px;
+        }
+        
+        ul, ol {
+            padding-left: 25px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+        
+        a:hover {
+            text-decoration: underline;
+        }
+        
+        .nav-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        
+        .nav-list li {
+            margin-bottom: 10px;
+        }
+        
+        .nav-list a {
+            display: block;
+            padding: 8px 10px;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        
+        .nav-list a:hover {
+            background-color: rgba(52, 152, 219, 0.1);
+            text-decoration: none;
+        }
+        
+        .nav-sublist {
+            list-style-type: none;
+            padding-left: 20px;
+            margin-top: 5px;
+            display: none;
+        }
+        
+        .nav-sublist li {
+            margin-bottom: 5px;
+        }
+        
+        .nav-sublist a {
+            padding: 5px 10px;
+            font-size: 0.9rem;
+        }
+        
+        .nav-toggle {
+            cursor: pointer;
+            user-select: none;
+        }
+        
+        .nav-toggle::after {
+            content: " ▼";
+            font-size: 0.8rem;
+            color: var(--primary-color);
+        }
+        
+        .nav-toggle.active::after {
+            content: " ▲";
+        }
+        
+        pre {
+            background-color: var(--light-gray);
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin-bottom: 20px;
+            font-family: 'Courier New', Courier, monospace;
+            border: 1px solid var(--border-color);
+        }
+        
+        code {
+            font-family: 'Courier New', Courier, monospace;
+            background-color: var(--light-gray);
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+        
+        .section {
+            margin-bottom: 40px;
+            scroll-margin-top: 20px;
+        }
+        
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--primary-color);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-decoration: none;
+            opacity: 0.7;
+            transition: opacity 0.3s;
+        }
+        
+        .back-to-top:hover {
+            opacity: 1;
+            text-decoration: none;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+                border-right: none;
+                border-bottom: 1px solid var(--border-color);
+            }
+            
+            .content {
+                margin-left: 0;
+                padding: 20px;
+            }
+            
+            .mobile-nav-toggle {
+                display: block;
+                text-align: center;
+                padding: 10px;
+                background-color: var(--primary-color);
+                color: white;
+                cursor: pointer;
+            }
+            
+            .sidebar-content {
+                display: none;
+            }
+            
+            .sidebar-content.active {
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <div class="mobile-nav-toggle">Menu</div>
+            <div class="sidebar-content">
+                <h3>Table of Contents</h3>
+                <ul class="nav-list">
+                    <li><a href="file:///C:/Users/tangoo/Downloads/storeteam/handyman-marketplace-plan.html#overview">1. Project Overview</a></li>
+                    <li>
+                        <a href="file:///C:/Users/tangoo/Downloads/storeteam/handyman-marketplace-plan.html#user-roles" class="nav-toggle active">2. User Roles and Features</a>
+                        <ul class="nav-sublist" style="display: block;">
+                            <li><a href="file:///C:/Users/tangoo/Downloads/storeteam/handyman-marketplace-plan.html#user-roles-section">2.1 User Roles</a></li>
+                            <li><a href="file:///C:/Users/tangoo/Downloads/storeteam/handyman-marketplace-plan.html#core-features">2.2 Core Features</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="file:///C:/Users/tangoo/Downloads/storeteam/handyman-marketplace-plan.html#database-design" class="nav-toggle active">3. Database Design</a>
+                        <ul class="nav-sublist" style="display: block;">
+                            <li><a href="file:///C:/Users/tangoo/Downloads/storeteam/handyman-marketplace-plan.html#database-tables">3.1 Database Tables</a></li>
+                            <li><a href="file:///C:/Users/tangoo/Downloads/storeteam/handyman-marketplace-plan.html#database-relationships">3.2 Database Relationships</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="file:///C:/Users/tangoo/Downloads/storeteam/handyman-marketplace-plan.html#technology-stack" class="nav-toggle">4. Technology Stack</a>
+                        <ul class="nav-sublist">
+                            <li><a href="file:///C:/Users/tangoo/Downloads/storeteam/handyman-marketplace-plan.html#core-technologies">4.1 Core Technologies</a></li>
+                            <li><a href="file:///C:/Users/tangoo/Downloads/storeteam/handyman-marketplace-plan.html#frontend-technologies">4.2 Front-end Technologies</a></li>
+                            <li><a href="file:///C:/Users/tangoo/Downloads/storeteam/handyman-marketplace-plan.html#backend-libraries">4.3 Back-end Libraries and Tools</a></li>
+                            <li><a href="file:///C:/Users/tangoo/Downloads/storeteam/handyman-marketplace-plan.html#development-tools">4.4 Development Tools</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="file:///C:/Users/tangoo/Downloads/storeteam/handyman-marketplace-plan.html#implementation-steps" class="nav-toggle">5. Implementation Steps</a>
+                        <ul class="nav-sublist">
+                            <li><a href="file:///C:/Users/tangoo/Downloads/storeteam/handyman-marketplace-plan.html#project-setup">5.1 Project Setup</a></li>
+                            <li><a href="file:///C:/Users/tangoo/Downloads/storeteam/handyman-marketplace-plan.html#authentication">5.2 Authentication</a></li>
+                            <li><a href="file:///C:/Users/tangoo/Downloads/storeteam/handyman-marketplace-plan.html#service-management">5.3 Service Management</a></li>
+                            <li><a href="file:///C:/Users/tangoo/Downloads/storeteam/handyman-marketplace-plan.html#booking-system">5.4 Booking System</a></li>
+                            <li><a href="file:///C:/Users/tangoo/Downloads/storeteam/handyman-marketplace-plan.html#payment-system">5.5 Payment System</a></li>
+                            <li><a href="file:///C:/Users/tangoo/Downloads/storeteam/handyman-marketplace-plan.html#review-system">5.6 Review System</a></li>
+                            <li><a href="file:///C:/Users/tangoo/Downloads/storeteam/handyman-marketplace-plan.html#messaging-system">5.7 Messaging System</a></li>
+                            <li><a href="file:///C:/Users/tangoo/Downloads/storeteam/handyman-marketplace-plan.html#admin-dashboard">5.8 Admin Dashboard</a></li>
+                            <li><a href="file:///C:/Users/tangoo/Downloads/storeteam/handyman-marketplace-plan.html#api-development">5.9 API Development</a></li>
+                            <li><a href="file:///C:/Users/tangoo/Downloads/storeteam/handyman-marketplace-plan.html#testing">5.10 Testing</a></li>
+                            <li><a href="file:///C:/Users/tangoo/Downloads/storeteam/handyman-marketplace-plan.html#deployment">5.11 Deployment</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="file:///C:/Users/tangoo/Downloads/storeteam/handyman-marketplace-plan.html#security-measures" class="nav-toggle">6. Security Measures</a>
+                        <ul class="nav-sublist">
+                            <li><a href="file:///C:/Users/tangoo/Downloads/storeteam/handyman-marketplace-plan.html#authentication-security">6.1 Authentication Security</a></li>
+                            <li><a href="file:///C:/Users/tangoo/Downloads/storeteam/handyman-marketplace-plan.html#data-protection">6.2 Data Protection</a></li>
+                            <li><a href="file:///C:/Users/tangoo/Downloads/storeteam/handyman-marketplace-plan.html#payment-security">6.3 Payment Security</a></li>
+                            <li><a href="file:///C:/Users/tangoo/Downloads/storeteam/handyman-marketplace-plan.html#api-security">6.4 API Security</a></li>
+                            <li><a href="file:///C:/Users/tangoo/Downloads/storeteam/handyman-marketplace-plan.html#infrastructure-security">6.5 Infrastructure Security</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="file:///C:/Users/tangoo/Downloads/storeteam/handyman-marketplace-plan.html#ui-ux-design" class="nav-toggle">7. UI/UX Design Considerations</a>
+                        <ul class="nav-sublist">
+                            <li><a href="file:///C:/Users/tangoo/Downloads/storeteam/handyman-marketplace-plan.html#user-interface">7.1 User Interface Design</a></li>
+                            <li><a href="file:///C:/Users/tangoo/Downloads/storeteam/handyman-marketplace-plan.html#user-experience">7.2 User Experience Design</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="file:///C:/Users/tangoo/Downloads/storeteam/handyman-marketplace-plan.html#scalability" class="nav-toggle">8. Scalability and Future Enhancements</a>
+                        <ul class="nav-sublist">
+                            <li><a href="file:///C:/Users/tangoo/Downloads/storeteam/handyman-marketplace-plan.html#scalability-considerations">8.1 Scalability Considerations</a></li>
+                            <li><a href="file:///C:/Users/tangoo/Downloads/storeteam/handyman-marketplace-plan.html#future-enhancements">8.2 Future Enhancements</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="file:///C:/Users/tangoo/Downloads/storeteam/handyman-marketplace-plan.html#project-timeline">9. Project Timeline</a></li>
+                    <li><a href="file:///C:/Users/tangoo/Downloads/storeteam/handyman-marketplace-plan.html#conclusion">10. Conclusion</a></li>
+                </ul>
+            </div>
+        </aside>
+        
+        <main class="content">
+            <h1>Handyman Marketplace Development Plan</h1>
+            
+            <section id="overview" class="section">
+                <h2>1. Project Overview</h2>
+                <p>The Handyman Marketplace will be a comprehensive platform connecting service providers (handymen) with customers seeking home repair and maintenance services. Built on CodeIgniter 4.6, this marketplace will facilitate service discovery, booking, payment processing, and communication between parties.</p>
+            </section>
+            
+            <section id="user-roles" class="section">
+                <h2>2. User Roles and Features</h2>
+                
+                <section id="user-roles-section">
+                    <h3>2.1 User Roles</h3>
+                    
+                    <h4>Customer</h4>
+                    <ul>
+                        <li>Register and manage profile</li>
+                        <li>Search for services</li>
+                        <li>Book appointments</li>
+                        <li>Make payments</li>
+                        <li>Leave reviews and ratings</li>
+                        <li>Message handymen</li>
+                        <li>View booking history</li>
+                        <li>Track service status</li>
+                    </ul>
+                    
+                    <h4>Handyman</h4>
+                    <ul>
+                        <li>Register and create professional profile</li>
+                        <li>List services with pricing</li>
+                        <li>Manage availability calendar</li>
+                        <li>Accept/reject booking requests</li>
+                        <li>Receive payments</li>
+                        <li>View customer reviews</li>
+                        <li>Message customers</li>
+                        <li>Track earnings and job history</li>
+                    </ul>
+                    
+                    <h4>Administrator</h4>
+                    <ul>
+                        <li>Manage all users (approve, suspend, delete)</li>
+                        <li>Moderate service listings</li>
+                        <li>Handle disputes</li>
+                        <li>Monitor platform activity</li>
+                        <li>Generate reports</li>
+                        <li>Configure system settings</li>
+                        <li>Manage payment processing</li>
+                    </ul>
+                </section>
+                
+                <section id="core-features">
+                    <h3>2.2 Core Features</h3>
+                    
+                    <h4>User Management</h4>
+                    <ul>
+                        <li>Registration and authentication</li>
+                        <li>Profile management</li>
+                        <li>Role-based access control</li>
+                        <li>Account verification (email, phone)</li>
+                    </ul>
+                    
+                    <h4>Service Listings</h4>
+                    <ul>
+                        <li>Category-based service organization</li>
+                        <li>Detailed service descriptions</li>
+                        <li>Pricing models (hourly, fixed, quote-based)</li>
+                        <li>Service area coverage</li>
+                        <li>Photo gallery for services</li>
+                        <li>Service tags for improved searchability</li>
+                    </ul>
+                    
+                    <h4>Search and Filtering</h4>
+                    <ul>
+                        <li>Location-based search</li>
+                        <li>Category and subcategory filtering</li>
+                        <li>Price range filtering</li>
+                        <li>Rating-based filtering</li>
+                        <li>Availability filtering</li>
+                        <li>Keyword search</li>
+                    </ul>
+                    
+                    <h4>Booking and Scheduling</h4>
+                    <ul>
+                        <li>Availability calendar</li>
+                        <li>Appointment scheduling</li>
+                        <li>Booking confirmation</li>
+                        <li>Booking modification/cancellation</li>
+                        <li>Reminder notifications</li>
+                        <li>Service status tracking</li>
+                    </ul>
+                    
+                    <h4>Payment Processing</h4>
+                    <ul>
+                        <li>Multiple payment methods</li>
+                        <li>Secure payment gateway integration</li>
+                        <li>Escrow system for service completion</li>
+                        <li>Refund processing</li>
+                        <li>Invoice generation</li>
+                        <li>Payment history</li>
+                    </ul>
+                    
+                    <h4>Reviews and Ratings</h4>
+                    <ul>
+                        <li>Star rating system</li>
+                        <li>Written reviews</li>
+                        <li>Review moderation</li>
+                        <li>Response to reviews</li>
+                        <li>Rating analytics</li>
+                    </ul>
+                    
+                    <h4>Messaging System</h4>
+                    <ul>
+                        <li>In-app messaging</li>
+                        <li>Notification system</li>
+                        <li>Message history</li>
+                        <li>File/image sharing</li>
+                    </ul>
+                    
+                    <h4>Dashboard and Analytics</h4>
+                    <ul>
+                        <li>User activity metrics</li>
+                        <li>Earnings reports</li>
+                        <li>Booking statistics</li>
+                        <li>Platform performance metrics</li>
+                    </ul>
+                </section>
+            </section>
+            
+            <section id="database-design" class="section">
+                <h2>3. Database Design</h2>
+                
+                <section id="database-tables">
+                    <h3>3.1 Database Tables</h3>
+                    
+                    <h4>Users Table</h4>
+                    <pre>CREATE TABLE users (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    first_name VARCHAR(100) NOT NULL,
+    last_name VARCHAR(100) NOT NULL,
+    phone VARCHAR(20),
+    address TEXT,
+    city VARCHAR(100),
+    state VARCHAR(100),
+    zip_code VARCHAR(20),
+    profile_image VARCHAR(255),
+    role ENUM('customer', 'handyman', 'admin') NOT NULL,
+    status ENUM('active', 'inactive', 'suspended') DEFAULT 'inactive',
+    email_verified BOOLEAN DEFAULT FALSE,
+    phone_verified BOOLEAN DEFAULT FALSE,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME ON UPDATE CURRENT_TIMESTAMP,
+    last_login DATETIME
+);</pre>
+                    
+                    <h4>Handyman Profiles Table</h4>
+                    <pre>CREATE TABLE handyman_profiles (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    user_id INT NOT NULL,
+    business_name VARCHAR(255),
+    description TEXT,
+    experience_years INT,
+    license_number VARCHAR(100),
+    insurance_info TEXT,
+    service_radius INT,
+    latitude DECIMAL(10, 8),
+    longitude DECIMAL(11, 8),
+    average_rating DECIMAL(3, 2) DEFAULT 0,
+    total_reviews INT DEFAULT 0,
+    featured BOOLEAN DEFAULT FALSE,
+    verification_status ENUM('pending', 'verified', 'rejected') DEFAULT 'pending',
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);</pre>
+                    
+                    <h4>Service Categories Table</h4>
+                    <pre>CREATE TABLE service_categories (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(100) NOT NULL,
+    description TEXT,
+    icon VARCHAR(255),
+    parent_id INT NULL,
+    status ENUM('active', 'inactive') DEFAULT 'active',
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (parent_id) REFERENCES service_categories(id) ON DELETE SET NULL
+);</pre>
+                    
+                    <h4>Services Table</h4>
+                    <pre>CREATE TABLE services (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    handyman_id INT NOT NULL,
+    category_id INT NOT NULL,
+    title VARCHAR(255) NOT NULL,
+    description TEXT,
+    price DECIMAL(10, 2),
+    price_type ENUM('fixed', 'hourly', 'quote') DEFAULT 'fixed',
+    duration INT, /* in minutes */
+    status ENUM('active', 'inactive') DEFAULT 'active',
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (handyman_id) REFERENCES handyman_profiles(id) ON DELETE CASCADE,
+    FOREIGN KEY (category_id) REFERENCES service_categories(id) ON DELETE CASCADE
+);</pre>
+                    
+                    <h4>Service Images Table</h4>
+                    <pre>CREATE TABLE service_images (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    service_id INT NOT NULL,
+    image_path VARCHAR(255) NOT NULL,
+    is_primary BOOLEAN DEFAULT FALSE,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (service_id) REFERENCES services(id) ON DELETE CASCADE
+);</pre>
+                    
+                    <h4>Service Tags Table</h4>
+                    <pre>CREATE TABLE service_tags (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(50) NOT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);</pre>
+                    
+                    <h4>Service Tag Relationships Table</h4>
+                    <pre>CREATE TABLE service_tag_relationships (
+    service_id INT NOT NULL,
+    tag_id INT NOT NULL,
+    PRIMARY KEY (service_id, tag_id),
+    FOREIGN KEY (service_id) REFERENCES services(id) ON DELETE CASCADE,
+    FOREIGN KEY (tag_id) REFERENCES service_tags(id) ON DELETE CASCADE
+);</pre>
+                    
+                    <h4>Availability Table</h4>
+                    <pre>CREATE TABLE availability (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    handyman_id INT NOT NULL,
+    day_of_week TINYINT NOT NULL, /* 0-6 for Sunday-Saturday */
+    start_time TIME NOT NULL,
+    end_time TIME NOT NULL,
+    is_available BOOLEAN DEFAULT TRUE,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (handyman_id) REFERENCES handyman_profiles(id) ON DELETE CASCADE
+);</pre>
+                    
+                    <h4>Bookings Table</h4>
+                    <pre>CREATE TABLE bookings (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    service_id INT NOT NULL,
+    customer_id INT NOT NULL,
+    handyman_id INT NOT NULL,
+    booking_date DATE NOT NULL,
+    start_time TIME NOT NULL,
+    end_time TIME,
+    status ENUM('pending', 'confirmed', 'completed', 'cancelled', 'no-show') DEFAULT 'pending',
+    notes TEXT,
+    address TEXT,
+    city VARCHAR(100),
+    state VARCHAR(100),
+    zip_code VARCHAR(20),
+    latitude DECIMAL(10, 8),
+    longitude DECIMAL(11, 8),
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (service_id) REFERENCES services(id) ON DELETE CASCADE,
+    FOREIGN KEY (customer_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (handyman_id) REFERENCES handyman_profiles(id) ON DELETE CASCADE
+);</pre>
+                    
+                    <h4>Payments Table</h4>
+                    <pre>CREATE TABLE payments (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    booking_id INT NOT NULL,
+    amount DECIMAL(10, 2) NOT NULL,
+    payment_method VARCHAR(50),
+    transaction_id VARCHAR(255),
+    status ENUM('pending', 'completed', 'failed', 'refunded') DEFAULT 'pending',
+    payment_date DATETIME,
+    platform_fee DECIMAL(10, 2),
+    handyman_payout DECIMAL(10, 2),
+    notes TEXT,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (booking_id) REFERENCES bookings(id) ON DELETE CASCADE
+);</pre>
+                    
+                    <h4>Reviews Table</h4>
+                    <pre>CREATE TABLE reviews (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    booking_id INT NOT NULL,
+    customer_id INT NOT NULL,
+    handyman_id INT NOT NULL,
+    rating TINYINT NOT NULL, /* 1-5 */
+    review_text TEXT,
+    handyman_response TEXT,
+    status ENUM('pending', 'approved', 'rejected') DEFAULT 'pending',
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (booking_id) REFERENCES bookings(id) ON DELETE CASCADE,
+    FOREIGN KEY (customer_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (handyman_id) REFERENCES handyman_profiles(id) ON DELETE CASCADE
+);</pre>
+                    
+                    <h4>Messages Table</h4>
+                    <pre>CREATE TABLE messages (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    sender_id INT NOT NULL,
+    receiver_id INT NOT NULL,
+    booking_id INT,
+    message TEXT NOT NULL,
+    is_read BOOLEAN DEFAULT FALSE,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (sender_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (receiver_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (booking_id) REFERENCES bookings(id) ON DELETE SET NULL
+);</pre>
+                    
+                    <h4>Notifications Table</h4>
+                    <pre>CREATE TABLE notifications (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    user_id INT NOT NULL,
+    type VARCHAR(50) NOT NULL,
+    title VARCHAR(255) NOT NULL,
+    message TEXT NOT NULL,
+    is_read BOOLEAN DEFAULT FALSE,
+    related_id INT, /* ID of related entity (booking, message, etc.) */
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);</pre>
+                </section>
+                
+                <section id="database-relationships">
+                    <h3>3.2 Database Relationships</h3>
+                    <ul>
+                        <li><strong>One-to-One</strong>: User to Handyman Profile</li>
+                        <li>
+                            <strong>One-to-Many</strong>:
+                            <ul>
+                                <li>Handyman Profile to Services</li>
+                                <li>Service Category to Services</li>
+                                <li>Service to Service Images</li>
+                                <li>User to Bookings (as customer)</li>
+                                <li>Handyman Profile to Bookings (as provider)</li>
+                                <li>Booking to Payment</li>
+                                <li>Booking to Review</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <strong>Many-to-Many</strong>:
+                            <ul>
+                                <li>Services to Tags (via service_tag_relationships)</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </section>
+            </section>
+            
+            <section id="technology-stack" class="section">
+                <h2>4. Technology Stack</h2>
+                
+                <section id="core-technologies">
+                    <h3>4.1 Core Technologies</h3>
+                    <ul>
+                        <li><strong>Framework</strong>: CodeIgniter 4.6</li>
+                        <li><strong>Database</strong>: MySQL 8.0</li>
+                        <li><strong>Server</strong>: Apache/Nginx</li>
+                        <li><strong>PHP Version</strong>: 8.1+</li>
+                    </ul>
+                </section>
+                
+                <section id="frontend-technologies">
+                    <h3>4.2 Front-end Technologies</h3>
+                    <ul>
+                        <li><strong>HTML5/CSS3/JavaScript</strong></li>
+                        <li><strong>Bootstrap 5</strong> for responsive design</li>
+                        <li><strong>jQuery</strong> for DOM manipulation</li>
+                        <li><strong>Font Awesome</strong> for icons</li>
+                        <li><strong>Flatpickr</strong> for date/time selection</li>
+                        <li><strong>Select2</strong> for enhanced select boxes</li>
+                        <li><strong>Leaflet.js</strong> for maps integration</li>
+                        <li><strong>Chart.js</strong> for analytics visualization</li>
+                    </ul>
+                </section>
+                
+                <section id="backend-libraries">
+                    <h3>4.3 Back-end Libraries and Tools</h3>
+                    <ul>
+                        <li><strong>Composer</strong> for dependency management</li>
+                        <li><strong>PHPUnit</strong> for testing</li>
+                        <li><strong>Myth:Auth</strong> for authentication</li>
+                        <li><strong>Intervention Image</strong> for image processing</li>
+                        <li><strong>PHPMailer</strong> for email notifications</li>
+                        <li><strong>Guzzle</strong> for HTTP requests</li>
+                        <li><strong>Stripe/PayPal</strong> for payment processing</li>
+                        <li><strong>Firebase Cloud Messaging</strong> for push notifications</li>
+                    </ul>
+                </section>
+                
+                <section id="development-tools">
+                    <h3>4.4 Development Tools</h3>
+                    <ul>
+                        <li><strong>Git</strong> for version control</li>
+                        <li><strong>Docker</strong> for development environment</li>
+                        <li><strong>Postman</strong> for API testing</li>
+                        <li><strong>PhpMyAdmin</strong> for database management</li>
+                        <li><strong>VS Code/PHPStorm</strong> for code editing</li>
+                    </ul>
+                </section>
+            </section>
+            
+            <section id="implementation-steps" class="section">
+                <h2>5. Implementation Steps</h2>
+                
+                <section id="project-setup">
+                    <h3>5.1 Project Setup and Configuration</h3>
+                    <ol>
+                        <li>
+                            <strong>Environment Setup</strong>
+                            <ul>
+                                <li>Install CodeIgniter 4.6</li>
+                                <li>Configure database connection</li>
+                                <li>Set up development environment</li>
+                                <li>Configure error handling and logging</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <strong>Project Structure</strong>
+                            <ul>
+                                <li>Organize controllers, models, views</li>
+                                <li>Set up routing</li>
+                                <li>Configure middleware</li>
+                                <li>Implement base templates</li>
+                            </ul>
+                        </li>
+                    </ol>
+                </section>
+                
+                <section id="authentication">
+                    <h3>5.2 Authentication and User Management</h3>
+                    <ol>
+                        <li>
+                            <strong>User Authentication</strong>
+                            <ul>
+                                <li>Implement registration and login</li>
+                                <li>Email verification</li>
+                                <li>Password reset functionality</li>
+                                <li>Remember me functionality</li>
+                                <li>Social login integration (optional)</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <strong>User Profile Management</strong>
+                            <ul>
+                                <li>Profile creation and editing</li>
+                                <li>Profile image upload</li>
+                                <li>Account settings</li>
+                                <li>Handyman profile creation and verification</li>
+                            </ul>
+                        </li>
+                    </ol>
+                </section>
+                
+                <section id="service-management">
+                    <h3>5.3 Service Management</h3>
+                    <ol>
+                        <li>
+                            <strong>Category Management</strong>
+                            <ul>
+                                <li>Category CRUD operations</li>
+                                <li>Subcategory management</li>
+                                <li>Category filtering</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <strong>Service Listings</strong>
+                            <ul>
+                                <li>Service creation and editing</li>
+                                <li>Service image upload</li>
+                                <li>Pricing configuration</li>
+                                <li>Service status management</li>
+                                <li>Service search and filtering</li>
+                            </ul>
+                        </li>
+                    </ol>
+                </section>
+                
+                <section id="booking-system">
+                    <h3>5.4 Booking and Scheduling System</h3>
+                    <ol>
+                        <li>
+                            <strong>Availability Management</strong>
+                            <ul>
+                                <li>Calendar integration</li>
+                                <li>Time slot management</li>
+                                <li>Availability settings</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <strong>Booking Process</strong>
+                            <ul>
+                                <li>Service selection</li>
+                                <li>Date and time selection</li>
+                                <li>Location specification</li>
+                                <li>Booking confirmation</li>
+                                <li>Notification system</li>
+                            </ul>
+                        </li>
+                    </ol>
+                </section>
+                
+                <section id="payment-system">
+                    <h3>5.5 Payment System</h3>
+                    <ol>
+                        <li>
+                            <strong>Payment Gateway Integration</strong>
+                            <ul>
+                                <li>Stripe/PayPal integration</li>
+                                <li>Secure payment processing</li>
+                                <li>Payment verification</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <strong>Financial Management</strong>
+                            <ul>
+                                <li>Invoice generation</li>
+                                <li>Payment history</li>
+                                <li>Refund processing</li>
+                                <li>Platform fee calculation</li>
+                                <li>Handyman payout system</li>
+                            </ul>
+                        </li>
+                    </ol>
+                </section>
+                
+                <section id="review-system">
+                    <h3>5.6 Review and Rating System</h3>
+                    <ol>
+                        <li>
+                            <strong>Review Management</strong>
+                            <ul>
+                                <li>Review submission</li>
+                                <li>Rating calculation</li>
+                                <li>Review moderation</li>
+                                <li>Response to reviews</li>
+                            </ul>
+                        </li>
+                    </ol>
+                </section>
+                
+                <section id="messaging-system">
+                    <h3>5.7 Messaging System</h3>
+                    <ol>
+                        <li>
+                            <strong>In-app Messaging</strong>
+                            <ul>
+                                <li>Message sending and receiving</li>
+                                <li>Message history</li>
+                                <li>File/image sharing</li>
+                                <li>Notification integration</li>
+                            </ul>
+                        </li>
+                    </ol>
+                </section>
+                
+                <section id="admin-dashboard">
+                    <h3>5.8 Admin Dashboard</h3>
+                    <ol>
+                        <li>
+                            <strong>User Management</strong>
+                            <ul>
+                                <li>User approval/suspension</li>
+                                <li>User search and filtering</li>
+                                <li>User activity monitoring</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <strong>Content Management</strong>
+                            <ul>
+                                <li>Service moderation</li>
+                                <li>Review moderation</li>
+                                <li>Category management</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <strong>System Configuration</strong>
+                            <ul>
+                                <li>Platform settings</li>
+                                <li>Fee configuration</li>
+                                <li>Email template management</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <strong>Reporting and Analytics</strong>
+                            <ul>
+                                <li>Booking statistics</li>
+                                <li>Revenue reports</li>
+                                <li>User growth metrics</li>
+                                <li>Service popularity analytics</li>
+                            </ul>
+                        </li>
+                    </ol>
+                </section>
+                
+                <section id="api-development">
+                    <h3>5.9 API Development</h3>
+                    <ol>
+                        <li>
+                            <strong>RESTful API Design</strong>
+                            <ul>
+                                <li>API endpoints for mobile integration</li>
+                                <li>Authentication and authorization</li>
+                                <li>Rate limiting</li>
+                                <li>Response formatting</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <strong>API Documentation</strong>
+                            <ul>
+                                <li>Swagger/OpenAPI documentation</li>
+                                <li>API usage examples</li>
+                                <li>Error handling documentation</li>
+                            </ul>
+                        </li>
+                    </ol>
+                </section>
+                
+                <section id="testing">
+                    <h3>5.10 Testing</h3>
+                    <ol>
+                        <li>
+                            <strong>Unit Testing</strong>
+                            <ul>
+                                <li>Model testing</li>
+                                <li>Controller testing</li>
+                                <li>Helper function testing</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <strong>Integration Testing</strong>
+                            <ul>
+                                <li>API endpoint testing</li>
+                                <li>Form submission testing</li>
+                                <li>Authentication flow testing</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <strong>User Acceptance Testing</strong>
+                            <ul>
+                                <li>Feature validation</li>
+                                <li>User flow testing</li>
+                                <li>Cross-browser testing</li>
+                                <li>Responsive design testing</li>
+                            </ul>
+                        </li>
+                    </ol>
+                </section>
+                
+                <section id="deployment">
+                    <h3>5.11 Deployment</h3>
+                    <ol>
+                        <li>
+                            <strong>Server Setup</strong>
+                            <ul>
+                                <li>Production server configuration</li>
+                                <li>SSL certificate installation</li>
+                                <li>Database optimization</li>
+                                <li>Caching configuration</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <strong>Deployment Process</strong>
+                            <ul>
+                                <li>Continuous integration setup</li>
+                                <li>Deployment automation</li>
+                                <li>Backup strategy</li>
+                                <li>Monitoring setup</li>
+                            </ul>
+                        </li>
+                    </ol>
+                </section>
+            </section>
+            
+            <section id="security-measures" class="section">
+                <h2>6. Security Measures</h2>
+                
+                <section id="authentication-security">
+                    <h3>6.1 Authentication Security</h3>
+                    <h4>Password Security</h4>
+                    <ul>
+                        <li>Bcrypt password hashing</li>
+                        <li>Password strength requirements</li>
+                        <li>Account lockout after failed attempts</li>
+                        <li>Two-factor authentication (optional)</li>
+                    </ul>
+                    
+                    <h4>Session Management</h4>
+                    <ul>
+                        <li>Secure session handling</li>
+                        <li>CSRF protection</li>
+                        <li>Session timeout</li>
+                        <li>Concurrent session control</li>
+                    </ul>
+                </section>
+                
+                <section id="data-protection">
+                    <h3>6.2 Data Protection</h3>
+                    <h4>Input Validation</h4>
+                    <ul>
+                        <li>Form validation</li>
+                        <li>Data sanitization</li>
+                        <li>XSS prevention</li>
+                        <li>SQL injection prevention</li>
+                    </ul>
+                    
+                    <h4>Data Encryption</h4>
+                    <ul>
+                        <li>Sensitive data encryption</li>
+                        <li>Secure storage of API keys</li>
+                        <li>Database encryption for sensitive fields</li>
+                    </ul>
+                </section>
+                
+                <section id="payment-security">
+                    <h3>6.3 Payment Security</h3>
+                    <h4>PCI Compliance</h4>
+                    <ul>
+                        <li>Secure payment processing</li>
+                        <li>No storage of credit card details</li>
+                        <li>Secure payment gateway integration</li>
+                    </ul>
+                    
+                    <h4>Transaction Security</h4>
+                    <ul>
+                        <li>Payment verification</li>
+                        <li>Fraud detection</li>
+                        <li>Secure refund process</li>
+                    </ul>
+                </section>
+                
+                <section id="api-security">
+                    <h3>6.4 API Security</h3>
+                    <h4>Authentication</h4>
+                    <ul>
+                        <li>JWT authentication</li>
+                        <li>API key management</li>
+                        <li>OAuth integration (optional)</li>
+                    </ul>
+                    
+                    <h4>Request Validation</h4>
+                    <ul>
+                        <li>Input validation</li>
+                        <li>Rate limiting</li>
+                        <li>IP whitelisting (for admin APIs)</li>
+                    </ul>
+                </section>
+                
+                <section id="infrastructure-security">
+                    <h3>6.5 Infrastructure Security</h3>
+                    <h4>Server Security</h4>
+                    <ul>
+                        <li>Firewall configuration</li>
+                        <li>Regular security updates</li>
+                        <li>DDoS protection</li>
+                        <li>Regular security audits</li>
+                    </ul>
+                    
+                    <h4>Backup and Recovery</h4>
+                    <ul>
+                        <li>Regular database backups</li>
+                        <li>Disaster recovery plan</li>
+                        <li>Data retention policy</li>
+                    </ul>
+                </section>
+            </section>
+            
+            <section id="ui-ux-design" class="section">
+                <h2>7. UI/UX Design Considerations</h2>
+                
+                <section id="user-interface">
+                    <h3>7.1 User Interface Design</h3>
+                    <h4>Responsive Design</h4>
+                    <ul>
+                        <li>Mobile-first approach</li>
+                        <li>Cross-browser compatibility</li>
+                        <li>Adaptive layouts for different screen sizes</li>
+                    </ul>
+                    
+                    <h4>Visual Design</h4>
+                    <ul>
+                        <li>Consistent color scheme</li>
+                        <li>Typography hierarchy</li>
+                        <li>Visual feedback for actions</li>
+                        <li>Iconography for improved recognition</li>
+                    </ul>
+                    
+                    <h4>Component Design</h4>
+                    <ul>
+                        <li>Form design and validation</li>
+                        <li>Button styles and states</li>
+                        <li>Card layouts for services</li>
+                        <li>Modal dialogs for interactions</li>
+                    </ul>
+                </section>
+                
+                <section id="user-experience">
+                    <h3>7.2 User Experience Design</h3>
+                    <h4>User Flows</h4>
+                    <ul>
+                        <li>Streamlined registration process</li>
+                        <li>Intuitive service discovery</li>
+                        <li>Simplified booking process</li>
+                        <li>Clear payment flow</li>
+                    </ul>
+                    
+                    <h4>Navigation</h4>
+                    <ul>
+                        <li>Logical menu structure</li>
+                        <li>Breadcrumb navigation</li>
+                        <li>Search functionality</li>
+                        <li>Quick access to common actions</li>
+                    </ul>
+                    
+                    <h4>Feedback and Guidance</h4>
+                    <ul>
+                        <li>Loading indicators</li>
+                        <li>Success/error messages</li>
+                        <li>Tooltips and help text</li>
+                        <li>Onboarding guidance for new users</li>
+                    </ul>
+                    
+                    <h4>Accessibility</h4>
+                    <ul>
+                        <li>WCAG 2.1 compliance</li>
+                        <li>Screen reader compatibility</li>
+                        <li>Keyboard navigation</li>
+                        <li>Color contrast for readability</li>
+                    </ul>
+                </section>
+            </section>
+            
+            <section id="scalability" class="section">
+                <h2>8. Scalability and Future Enhancements</h2>
+                
+                <section id="scalability-considerations">
+                    <h3>8.1 Scalability Considerations</h3>
+                    <h4>Database Scalability</h4>
+                    <ul>
+                        <li>Database indexing</li>
+                        <li>Query optimization</li>
+                        <li>Sharding strategy (for future growth)</li>
+                        <li>Caching implementation</li>
+                    </ul>
+                    
+                    <h4>Application Scalability</h4>
+                    <ul>
+                        <li>Horizontal scaling capability</li>
+                        <li>Load balancing configuration</li>
+                        <li>Microservices architecture (future)</li>
+                        <li>API rate limiting</li>
+                    </ul>
+                    
+                    <h4>Storage Scalability</h4>
+                    <ul>
+                        <li>Cloud storage integration</li>
+                        <li>CDN for static assets</li>
+                        <li>Image optimization</li>
+                        <li>File storage management</li>
+                    </ul>
+                </section>
+                
+                <section id="future-enhancements">
+                    <h3>8.2 Future Enhancements</h3>
+                    <h4>Mapping and Location Services</h4>
+                    <ul>
+                        <li>Real-time location tracking</li>
+                        <li>Service area visualization</li>
+                        <li>Route optimization</li>
+                        <li>Proximity-based service discovery</li>
+                    </ul>
+                    
+                    <h4>Advanced Communication</h4>
+                    <ul>
+                        <li>Real-time chat functionality</li>
+                        <li>Video consultation</li>
+                        <li>Voice messaging</li>
+                        <li>Automated appointment reminders</li>
+                    </ul>
+                    
+                    <h4>Enhanced Search Capabilities</h4>
+                    <ul>
+                        <li>Elasticsearch integration</li>
+                        <li>AI-powered service recommendations</li>
+                        <li>Voice search</li>
+                        <li>Visual search for home repair issues</li>
+                    </ul>
+                    
+                    <h4>Mobile Applications</h4>
+                    <ul>
+                        <li>Native iOS application</li>
+                        <li>Native Android application</li>
+                        <li>Push notification system</li>
+                        <li>Offline functionality</li>
+                    </ul>
+                    
+                    <h4>Advanced Analytics</h4>
+                    <ul>
+                        <li>Predictive analytics for demand</li>
+                        <li>Customer behavior analysis</li>
+                        <li>Price optimization</li>
+                        <li>Performance insights for handymen</li>
+                    </ul>
+                    
+                    <h4>Additional Features</h4>
+                    <ul>
+                        <li>Service packages and bundles</li>
+                        <li>Subscription-based services</li>
+                        <li>Loyalty program</li>
+                        <li>Referral system</li>
+                        <li>Gift cards and promotions</li>
+                    </ul>
+                </section>
+            </section>
+            
+            <section id="project-timeline" class="section">
+                <h2>9. Project Timeline</h2>
+                
+                <h3>Phase 1: Project Setup and Core Functionality (Weeks 1-4)</h3>
+                <ul>
+                    <li><strong>Week 1</strong>: Project setup, environment configuration, database design</li>
+                    <li><strong>Week 2</strong>: Authentication system, user registration, profile management</li>
+                    <li><strong>Week 3</strong>: Service categories, service listings, search functionality</li>
+                    <li><strong>Week 4</strong>: Basic booking system, availability management</li>
+                </ul>
+                
+                <h3>Phase 2: Advanced Features and Integrations (Weeks 5-8)</h3>
+                <ul>
+                    <li><strong>Week 5</strong>: Payment gateway integration, transaction management</li>
+                    <li><strong>Week 6</strong>: Messaging system, notification system</li>
+                    <li><strong>Week 7</strong>: Review and rating system, service provider dashboard</li>
+                    <li><strong>Week 8</strong>: Customer dashboard, booking management</li>
+                </ul>
+                
+                <h3>Phase 3: Admin Features and Optimization (Weeks 9-12)</h3>
+                <ul>
+                    <li><strong>Week 9</strong>: Admin dashboard, user management, content moderation</li>
+                    <li><strong>Week 10</strong>: Reporting and analytics, financial management</li>
+                    <li><strong>Week 11</strong>: API development, mobile integration preparation</li>
+                    <li><strong>Week 12</strong>: Performance optimization, security enhancements</li>
+                </ul>
+                
+                <h3>Phase 4: Testing and Deployment (Weeks 13-16)</h3>
+                <ul>
+                    <li><strong>Week 13</strong>: Unit testing, integration testing</li>
+                    <li><strong>Week 14</strong>: User acceptance testing, bug fixing</li>
+                    <li><strong>Week 15</strong>: Production environment setup, deployment preparation</li>
+                    <li><strong>Week 16</strong>: Final deployment, post-launch monitoring, documentation</li>
+                </ul>
+                
+                <h3>Phase 5: Post-Launch and Enhancements (Ongoing)</h3>
+                <ul>
+                    <li><strong>Months 4-6</strong>: Bug fixes, performance monitoring, user feedback collection</li>
+                    <li><strong>Months 7-9</strong>: First round of enhancements based on user feedback</li>
+                    <li><strong>Months 10-12</strong>: Advanced feature implementation (real-time chat, mapping)</li>
+                    <li><strong>Year 2</strong>: Mobile application development, AI integration, scaling</li>
+                </ul>
+            </section>
+            
+            <section id="conclusion" class="section">
+                <h2>10. Conclusion</h2>
+                <p>This comprehensive plan outlines the development of a Handyman Marketplace using CodeIgniter 4.6. The platform will connect service providers with customers seeking home repair and maintenance services through a robust, secure, and user-friendly interface.</p>
+                <p>The implementation will follow a phased approach, starting with core functionality and gradually adding advanced features. Security, scalability, and user experience are prioritized throughout the development process.</p>
+                <p>Regular testing and feedback collection will ensure the platform meets user needs and market demands. The modular design allows for future enhancements and integrations, ensuring the platform can evolve with changing requirements and technologies.</p>
+            </section>
+        </main>
+    </div>
+    
+    <a href="file:///C:/Users/tangoo/Downloads/storeteam/handyman-marketplace-plan.html#" class="back-to-top" style="display: none;">↑</a>
+    
+    <script>
+        // Toggle navigation submenus
+        document.addEventListener('DOMContentLoaded', function() {
+            const toggles = document.querySelectorAll('.nav-toggle');
+            
+            toggles.forEach(toggle => {
+                toggle.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    this.classList.toggle('active');
+                    const sublist = this.nextElementSibling;
+                    if (sublist.style.display === 'block') {
+                        sublist.style.display = 'none';
+                    } else {
+                        sublist.style.display = 'block';
+                    }
+                });
+            });
+            
+            // Mobile navigation toggle
+            const mobileToggle = document.querySelector('.mobile-nav-toggle');
+            const sidebarContent = document.querySelector('.sidebar-content');
+            
+            if (mobileToggle) {
+                mobileToggle.addEventListener('click', function() {
+                    sidebarContent.classList.toggle('active');
+                });
+            }
+            
+            // Back to top button
+            const backToTop = document.querySelector('.back-to-top');
+            
+            window.addEventListener('scroll', function() {
+                if (window.pageYOffset > 300) {
+                    backToTop.style.display = 'flex';
+                } else {
+                    backToTop.style.display = 'none';
+                }
+            });
+            
+            // Initially hide back to top button
+            backToTop.style.display = 'none';
+        });
+    </script>
+
+</body></html>
