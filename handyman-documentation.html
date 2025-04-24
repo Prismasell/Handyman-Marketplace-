@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Handyman Services - Project Documentation</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1, h2, h3, h4 {
+            color: #2c3e50;
+        }
+        h1 {
+            text-align: center;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+        }
+        h2 {
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 5px;
+            margin-top: 30px;
+        }
+        .section {
+            margin-bottom: 30px;
+        }
+        .feature-box {
+            background-color: #f9f9f9;
+            border-left: 4px solid #3498db;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 0 4px 4px 0;
+        }
+        .feature-title {
+            font-weight: bold;
+            color: #2980b9;
+            margin-bottom: 5px;
+        }
+        .feature-description {
+            margin-left: 10px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .timeline {
+            display: flex;
+            flex-direction: column;
+            margin: 20px 0;
+        }
+        .timeline-item {
+            display: flex;
+            margin-bottom: 15px;
+        }
+        .timeline-week {
+            width: 120px;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        .timeline-content {
+            flex: 1;
+            background-color: #f8f9fa;
+            padding: 10px 15px;
+            border-radius: 4px;
+            border-left: 3px solid #3498db;
+        }
+        .note {
+            background-color: #fffbea;
+            border-left: 4px solid #f1c40f;
+            padding: 10px 15px;
+            margin: 15px 0;
+            border-radius: 0 4px 4px 0;
+        }
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 15px 0;
+        }
+        .tech-item {
+            background-color: #e8f4fc;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 14px;
+            color: #2980b9;
+        }
+        .print-button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            float: right;
+        }
+        @media print {
+            .print-button {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="print-button" onclick="window.print()">Print Documentation</button>
+    <h1>Handyman Services Website - Project Documentation</h1>
+    
+    <div class="section">
+        <h2>Project Overview</h2>
+        <p>This document outlines the complete development plan for a Handyman Services website built with CodeIgniter 4.6. The platform will serve as a single-vendor system with separate admin and user panels, featuring an easy-to-use service booking system, advanced marketing tools, and a modern responsive design.</p>
+        
+        <div class="tech-stack">
+            <div class="tech-item">CodeIgniter 4.6</div>
+            <div class="tech-item">MySQL</div>
+            <div class="tech-item">Bootstrap 5</div>
+            <div class="tech-item">JavaScript/jQuery</div>
+            <div class="tech-item">AJAX</div>
+            <div class="tech-item">RESTful API</div>
+        </div>
+    </div>
+    
+    <div class="section">
+        <h2>System Architecture</h2>
+        <p>The application follows the MVC architecture pattern of CodeIgniter 4.6 with additional service layers for business logic and repositories for data access.</p>
+        
+        <div class="feature-box">
+            <div class="feature-title">Key Components:</div>
+            <div class="feature-description">
+                <ul>
+                    <li><strong>Client Browser</strong> - User interface for customers and admin</li>
+                    <li><strong>CodeIgniter 4.6 Application</strong> - Core application framework</li>
+                    <li><strong>Admin Panel</strong> - Management interface for the service provider</li>
+                    <li><strong>User Panel</strong> - Customer-facing interface for booking services</li>
+                    <li><strong>Database (MySQL)</strong> - Data storage</li>
+                    <li><strong>Email Service</strong> - For notifications and marketing</li>
+                    <li><strong>Payment Gateway</strong> - For processing payments</li>
+                    <li><strong>Marketing Tools</strong> - For promotions and customer engagement</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <div class="section">
+        <h2>Database Design</h2>
+        <p>The database schema includes the following key tables:</p>
+        
+        <table>
+            <tr>
+                <th>Table</th>
+                <th>Description</th>
+                <th>Key Fields</th>
+            </tr>
+            <tr>
+                <td>users</td>
+                <td>Stores user information for both customers and admin</td>
+                <td>id, email, password, name, phone, address, role_id</td>
+            </tr>
+            <tr>
+                <td>roles</td>
+                <td>Defines user roles and permissions</td>
+                <td>id, name, permissions</td>
+            </tr>
+            <tr>
+                <td>services</td>
+                <td>Contains all available handyman services</td>
+                <td>id, name, description, price, image, category_id, is_active</td>
+            </tr>
+            <tr>
+                <td>categories</td>
+                <td>Service categories for organization</td>
+                <td>id, name, description, icon</td>
+            </tr>
+            <tr>
+                <td>bookings</td>
+                <td>Service booking records</td>
+                <td>id, user_id, service_id, booking_date, status, notes, total_amount</td>
+            </tr>
+            <tr>
+                <td>reviews</td>
+                <td>Customer reviews for completed services</td>
+                <td>id, user_id, booking_id, rating, comment</td>
+            </tr>
+            <tr>
+                <td>payments</td>
+                <td>Payment transaction records</td>
+                <td>id, booking_id, amount, payment_method, transaction_id, status</td>
+            </tr>
+            <tr>
+                <td>marketing_campaigns</td>
+                <td>Marketing campaign details</td>
+                <td>id, name, description, start_date, end_date, status</td>
+            </tr>
+            <tr>
+                <td>coupons</td>
+                <td>Discount coupon information</td>
+                <td>id, code, discount, valid_until, campaign_id, usage_limit, used_count</td>
+            </tr>
+            <tr>
+                <td>affiliates</td>
+                <td>Affiliate partner information</td>
+                <td>id, user_id, code, commission_rate, status, payout_method</td>
+            </tr>
+            <tr>
+                <td>affiliate_transactions</td>
+                <td>Records of affiliate-generated bookings and commissions</td>
+                <td>id, affiliate_id, booking_id, commission_amount, status, date</td>
+            </tr>
+        </table>
+    </div>
+    
+    <div class="section">
+        <h2>Admin Panel Features</h2>
+        
+        <div class="feature-box">
+            <div class="feature-title">Dashboard</div>
+            <div class="feature-description">
+                <ul>
+                    <li>Overview of key metrics (bookings, revenue, customers)</li>
+                    <li>Recent activity feed</li>
+                    <li>Quick action buttons</li>
+                    <li>Performance charts and graphs</li>
+                    <li>Calendar view of upcoming bookings</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="feature-box">
+            <div class="feature-title">Service Management</div>
+            <div class="feature-description">
+                <ul>
+                    <li>Create, edit, and delete services</li>
+                    <li>Set pricing and availability</li>
+                    <li>Upload service images</li>
+                    <li>Organize services into categories</li>
+                    <li>Enable/disable services</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="feature-box">
+            <div class="feature-title">Booking Management</div>
+            <div class="feature-description">
+                <ul>
+                    <li>View all bookings with filtering options</li>
+                    <li>Update booking status (pending, confirmed, completed, cancelled)</li>
+                    <li>Add notes to bookings</li>
+                    <li>Reschedule bookings</li>
+                    <li>Send notifications to customers</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="feature-box">
+            <div class="feature-title">Customer Management</div>
+            <div class="feature-description">
+                <ul>
+                    <li>View customer profiles and booking history</li>
+                    <li>Add notes to customer profiles</li>
+                    <li>Manage customer accounts</li>
+                    <li>View customer feedback and ratings</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="feature-box">
+            <div class="feature-title">Marketing Tools</div>
+            <div class="feature-description">
+                <ul>
+                    <li>Create and manage promotional campaigns</li>
+                    <li>Generate discount coupons</li>
+                    <li>Email marketing templates and scheduling</li>
+                    <li>Track campaign performance</li>
+                    <li>Seasonal promotion setup</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="feature-box">
+            <div class="feature-title">Affiliate System</div>
+            <div class="feature-description">
+                <ul>
+                    <li>Manage affiliate partners</li>
+                    <li>Set commission rates</li>
+                    <li>Generate unique affiliate codes</li>
+                    <li>Track affiliate-generated bookings</li>
+                    <li>Process affiliate payouts</li>
+                    <li>Performance reports for affiliates</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="feature-box">
+            <div class="feature-title">Reports and Analytics</div>
+            <div class="feature-description">
+                <ul>
+                    <li>Revenue reports (daily, weekly, monthly, yearly)</li>
+                    <li>Service popularity analytics</li>
+                    <li>Customer acquisition and retention metrics</li>
+                    <li>Marketing campaign performance</li>
+                    <li>Affiliate performance tracking</li>
+                    <li>Export reports in various formats (PDF, CSV)</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <div class="section">
+        <h2>User Panel Features</h2>
+        
+        <div class="feature-box">
+            <div class="feature-title">Homepage</div>
+            <div class="feature-description">
+                <ul>
+                    <li>Featured services carousel</li>
+                    <li>Service category navigation</li>
+                    <li>Quick booking section</li>
+                    <li>Testimonials and reviews</li>
+                    <li>Special offers and promotions</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="feature-box">
+            <div class="feature-title">Service Browsing</div>
+            <div class="feature-description">
+                <ul>
+                    <li>Category-based service listing</li>
+                    <li>Search functionality</li>
+                    <li>Filtering options (price, rating, availability)</li>
+                    <li>Service details with images and descriptions</li>
+                    <li>Related services suggestions</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="feature-box">
+            <div class="feature-title">Booking System</div>
+            <div class="feature-description">
+                <ul>
+                    <li>Interactive calendar for date/time selection</li>
+                    <li>Service customization options</li>
+                    <li>Address input with map integration</li>
+                    <li>Special instructions field</li>
+                    <li>Booking summary and confirmation</li>
+                    <li>Coupon code application</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="feature-box">
+            <div class="feature-title">User Account</div>
+            <div class="feature-description">
+                <ul>
+                    <li>Profile management</li>
+                    <li>Booking history and status tracking</li>
+                    <li>Saved addresses</li>
+                    <li>Review submission for completed services</li>
+                    <li>Payment methods management</li>
+                    <li>Notification preferences</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="feature-box">
+            <div class="feature-title">Payment System</div>
+            <div class="feature-description">
+                <ul>
+                    <li>Multiple payment method options</li>
+                    <li>Secure payment processing</li>
+                    <li>Invoice generation</li>
+                    <li>Payment history</li>
+                    <li>Refund processing (if applicable)</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="feature-box">
+            <div class="feature-title">Affiliate Portal</div>
+            <div class="feature-description">
+                <ul>
+                    <li>Affiliate registration and approval process</li>
+                    <li>Unique referral link generation</li>
+                    <li>Dashboard showing referrals and earnings</li>
+                    <li>Marketing materials and banners</li>
+                    <li>Commission tracking</li>
+                    <li>Payout request system</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <div class="section">
+        <h2>Marketing Tools</h2>
+        
+        <div class="feature-box">
+            <div class="feature-title">Email Marketing</div>
+            <div class="feature-description">
+                <ul>
+                    <li>Newsletter templates</li>
+                    <li>Automated email campaigns</li>
+                    <li>Customer segmentation</li>
+                    <li>Performance tracking (open rates, click-through rates)</li>
+                    <li>Scheduled and triggered emails</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="feature-box">
+            <div class="feature-title">Coupon System</div>
+            <div class="feature-description">
+                <ul>
+                    <li>Generate unique coupon codes</li>
+                    <li>Set discount amounts or percentages</li>
+                    <li>Define validity periods</li>
+                    <li>Limit usage per customer</li>
+                    <li>Track redemption rates</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="feature-box">
+            <div class="feature-title">Referral Program</div>
+            <div class="feature-description">
+                <ul>
+                    <li>Customer referral tracking</li>
+                    <li>Reward system for successful referrals</li>
+                    <li>Social sharing tools</li>
+                    <li>Referral analytics</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="feature-box">
+            <div class="feature-title">Affiliate System</div>
+            <div class="feature-description">
+                <ul>
+                    <li>Partner onboarding process</li>
+                    <li>Commission structure management</li>
+                    <li>Tracking links and promotional materials</li>
+                    <li>Performance dashboard for affiliates</li>
+                    <li>Automated commission calculations</li>
+                    <li>Payout management system</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="feature-box">
+            <div class="feature-title">SEO Tools</div>
+            <div class="feature-description">
+                <ul>
+                    <li>Meta tag management</li>
+                    <li>XML sitemap generation</li>
+                    <li>Structured data implementation</li>
+                    <li>URL optimization</li>
+                    <li>Content optimization suggestions</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="feature-box">
+            <div class="feature-title">Social Media Integration</div>
+            <div class="feature-description">
+                <ul>
+                    <li>Social sharing buttons</li>
+                    <li>Social media feed integration</li>
+                    <li>Social login options</li>
+                    <li>Automated posting of new services/promotions</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <div class="section">
+        <h2>Technical Implementation</h2>
+        
+        <div class="feature-box">
+            <div class="feature-title">CodeIgniter 4.6 Best Practices</div>
+            <div class="feature-description">
+                <ul>
+                    <li>MVC architecture with proper separation of concerns</li>
+                    <li>Use of Services layer for business logic</li>
+                    <li>Repositories for data access</li>
+                    <li>Filters for request/response handling</li>
+                    <li>Events for system-wide notifications</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="feature-box">
+            <div class="feature-title">Security Measures</div>
+            <div class="feature-description">
+                <ul>
+                    <li>CSRF protection</li>
+                    <li>Input validation and sanitization</li>
+                    <li>Output escaping</li>
+                    <li>Proper authentication and authorization</li>
+                    <li>Password hashing with bcrypt</li>
+                    <li>Rate limiting for sensitive endpoints</li>
+                    <li>SQL injection prevention</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="feature-box">
+            <div class="feature-title">Database Implementation</div>
+            <div class="feature-description">
+                <ul>
+                    <li>Migrations for database versioning</li>
+                    <li>Seeders for initial data</li>
+                    <li>Query Builder for complex queries</li>
+                    <li>Proper use of transactions</li>
+                    <li>Efficient indexing for performance</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="feature-box">
+            <div class="feature-title">Frontend Implementation</div>
+            <div class="feature-description">
+                <ul>
+                    <li>Responsive design with Bootstrap 5</li>
+                    <li>Modern JavaScript with minimal jQuery</li>
+                    <li>AJAX for dynamic content loading</li>
+                    <li>Form validation (client and server-side)</li>
+                    <li>Progressive enhancement approach</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <div class="section">
+        <h2>Implementation Timeline</h2>
+        
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-week">Week 1</div>
+                <div class="timeline-content">
+                    <strong>Project Setup & Configuration</strong>
+                    <ul>
+                        <li>Set up CodeIgniter 4.6 project</li>
+                        <li>Configure database connection</li>
+                        <li>Set up environment configurations</li>
+                        <li>Implement authentication system</li>
+                        <li>Create base controllers and models</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-week">Weeks 2-4</div>
+                <div class="timeline-content">
+                    <strong>Admin Panel Development</strong>
+                    <ul>
+                        <li>Dashboard implementation</li>
+                        <li>Service management</li>
+                        <li>Booking management</li>
+                        <li>Customer management</li>
+                        <li>Reports and analytics</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-week">Weeks 5-7</div>
+                <div class="timeline-content">
+                    <strong>User Panel Development</strong>
+                    <ul>
+                        <li>Homepage and service browsing</li>
+                        <li>Booking system implementation</li>
+                        <li>User account management</li>
+                        <li>Payment integration</li>
+                        <li>Review system</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-week">Week 8</div>
+                <div class="timeline-content">
+                    <strong>Marketing Tools & Affiliate System</strong>
+                    <ul>
+                        <li>Email marketing integration</li>
+                        <li>Coupon system</li>
+                        <li>Referral program</li>
+                        <li>Affiliate management system</li>
+                        <li>SEO optimization</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-week">Week 9</div>
+                <div class="timeline-content">
+                    <strong>Testing & Optimization</strong>
+                    <ul>
+                        <li>Unit testing</li>
+                        <li>Integration testing</li>
+                        <li>Performance optimization</li>
+                        <li>Mobile responsiveness testing</li>
+                        <li>Security testing</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-week">Week 10</div>
+                <div class="timeline-content">
+                    <strong>Deployment & Documentation</strong>
+                    <ul>
+                        <li>Server setup</li>
+                        <li>Deployment</li>
+                        <li>User documentation</li>
+                        <li>Admin documentation</li>
+                        <li>Training materials</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="section">
+        <h2>UI/UX Design Approach</h2>
+        <p>The design will be modern, clean, and responsive with:</p>
+        <ul>
+            <li>Intuitive navigation with clear hierarchy</li>
+            <li>Prominent call-to-action buttons</li>
+            <li>Mobile-first approach ensuring compatibility across all devices</li>
+            <li>Accessible design elements following WCAG guidelines</li>
+            <li>Fast loading pages with optimized assets</li>
+            <li>Visual service categorization with icons and images</li>
+            <li>Easy booking process with minimal steps</li>
+            <li>Consistent color scheme and typography throughout the application</li>
+        </ul>
+    </div>
+    
+    <div class="note">
+        <strong>Note:</strong> This documentation serves as a comprehensive guide for developing the Handyman Services website. The actual implementation may require adjustments based on specific requirements and constraints that arise during development.
+    </div>
+</body>
+</html>

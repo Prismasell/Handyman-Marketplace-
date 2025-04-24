@@ -1,0 +1,1104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Handyman Marketplace Database Schema</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #eee;
+        }
+        h2 {
+            color: #3498db;
+            margin-top: 30px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid #eee;
+            cursor: pointer;
+        }
+        h2:hover {
+            color: #2980b9;
+        }
+        h2::before {
+            content: "▶ ";
+            font-size: 0.8em;
+        }
+        h2.active::before {
+            content: "▼ ";
+        }
+        h3 {
+            color: #2c3e50;
+            margin-top: 20px;
+        }
+        pre {
+            background-color: #f8f9fa;
+            border: 1px solid #eee;
+            border-radius: 5px;
+            padding: 15px;
+            overflow-x: auto;
+            margin-bottom: 20px;
+        }
+        code {
+            font-family: 'Courier New', Courier, monospace;
+            color: #333;
+        }
+        .sql-keyword {
+            color: #0033b3;
+            font-weight: bold;
+        }
+        .sql-type {
+            color: #7d5bbf;
+        }
+        .sql-value {
+            color: #067d17;
+        }
+        .sql-comment {
+            color: #8c8c8c;
+            font-style: italic;
+        }
+        .section-content {
+            display: none;
+            padding-left: 20px;
+        }
+        .active + .section-content {
+            display: block;
+        }
+        #toc {
+            background-color: #f8f9fa;
+            border: 1px solid #eee;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 30px;
+        }
+        #toc h2 {
+            margin-top: 0;
+            border-bottom: none;
+        }
+        #toc ul {
+            list-style-type: none;
+            padding-left: 10px;
+        }
+        #toc li {
+            margin-bottom: 5px;
+        }
+        #toc a {
+            text-decoration: none;
+            color: #3498db;
+        }
+        #toc a:hover {
+            text-decoration: underline;
+            color: #2980b9;
+        }
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #3498db;
+            color: white;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            text-align: center;
+            line-height: 40px;
+            text-decoration: none;
+            opacity: 0.7;
+            transition: opacity 0.3s;
+        }
+        .back-to-top:hover {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <h1>Handyman Marketplace Database Schema</h1>
+    
+    <div id="toc">
+        <h2>Table of Contents</h2>
+        <ul>
+            <li><a href="#user-management">1. User Management</a></li>
+            <li><a href="#role-permission">2. Role & Permission Management</a></li>
+            <li><a href="#service-management">3. Service Management</a></li>
+            <li><a href="#booking-availability">4. Booking & Availability</a></li>
+            <li><a href="#payment-financial">5. Payment & Financial Management</a></li>
+            <li><a href="#tax-management">6. Tax Management</a></li>
+            <li><a href="#review-system">7. Review System</a></li>
+            <li><a href="#communication">8. Communication System</a></li>
+            <li><a href="#email-system">9. Email System</a></li>
+            <li><a href="#notification-system">10. Notification System</a></li>
+            <li><a href="#subscription-plan">11. Subscription & Plan Management</a></li>
+            <li><a href="#affiliate-system">12. Affiliate System</a></li>
+            <li><a href="#help-desk">13. Help Desk System</a></li>
+            <li><a href="#blog-system">14. Blog System</a></li>
+            <li><a href="#cms-pages">15. CMS Pages</a></li>
+            <li><a href="#document-management">16. Document Management</a></li>
+            <li><a href="#promotional">17. Promotional System</a></li>
+            <li><a href="#coupon-discount">18. Coupon & Discount System</a></li>
+            <li><a href="#favorites">19. Favorites & Bookmarks</a></li>
+            <li><a href="#system-settings">20. System Settings</a></li>
+            <li><a href="#language-translation">21. Language & Translation</a></li>
+            <li><a href="#social-media">22. Social Media Integration</a></li>
+            <li><a href="#reports-analytics">23. Reports & Analytics</a></li>
+            <li><a href="#audit-logs">24. Audit Logs</a></li>
+            <li><a href="#database-indexes">25. Database Indexes</a></li>
+        </ul>
+    </div>
+
+    <h2 id="user-management">1. User Management</h2>
+    <div class="section-content">
+        <h3>Users Table</h3>
+        <pre><code><span class="sql-keyword">CREATE TABLE</span> users (
+    id <span class="sql-type">INT</span> <span class="sql-keyword">PRIMARY KEY</span> <span class="sql-keyword">AUTO_INCREMENT</span>,
+    email <span class="sql-type">VARCHAR(255)</span> <span class="sql-keyword">UNIQUE NOT NULL</span>,
+    password <span class="sql-type">VARCHAR(255)</span> <span class="sql-keyword">NOT NULL</span>,
+    first_name <span class="sql-type">VARCHAR(100)</span> <span class="sql-keyword">NOT NULL</span>,
+    last_name <span class="sql-type">VARCHAR(100)</span> <span class="sql-keyword">NOT NULL</span>,
+    phone <span class="sql-type">VARCHAR(20)</span>,
+    address <span class="sql-type">TEXT</span>,
+    city <span class="sql-type">VARCHAR(100)</span>,
+    state <span class="sql-type">VARCHAR(100)</span>,
+    zip_code <span class="sql-type">VARCHAR(20)</span>,
+    profile_image <span class="sql-type">VARCHAR(255)</span>,
+    role <span class="sql-type">ENUM</span>(<span class="sql-value">'customer'</span>, <span class="sql-value">'handyman'</span>, <span class="sql-value">'admin'</span>) <span class="sql-keyword">NOT NULL</span>,
+    status <span class="sql-type">ENUM</span>(<span class="sql-value">'active'</span>, <span class="sql-value">'inactive'</span>, <span class="sql-value">'suspended'</span>) <span class="sql-keyword">DEFAULT</span> <span class="sql-value">'inactive'</span>,
+    email_verified <span class="sql-type">BOOLEAN</span> <span class="sql-keyword">DEFAULT</span> <span class="sql-value">FALSE</span>,
+    phone_verified <span class="sql-type">BOOLEAN</span> <span class="sql-keyword">DEFAULT</span> <span class="sql-value">FALSE</span>,
+    wallet_balance <span class="sql-type">DECIMAL(10, 2)</span> <span class="sql-keyword">DEFAULT</span> <span class="sql-value">0.00</span>,
+    created_at <span class="sql-type">DATETIME</span> <span class="sql-keyword">DEFAULT</span> <span class="sql-keyword">CURRENT_TIMESTAMP</span>,
+    updated_at <span class="sql-type">DATETIME</span> <span class="sql-keyword">ON UPDATE</span> <span class="sql-keyword">CURRENT_TIMESTAMP</span>,
+    last_login <span class="sql-type">DATETIME</span>
+);</code></pre>
+
+        <h3>Handyman Profiles Table</h3>
+        <pre><code><span class="sql-keyword">CREATE TABLE</span> handyman_profiles (
+    id <span class="sql-type">INT</span> <span class="sql-keyword">PRIMARY KEY</span> <span class="sql-keyword">AUTO_INCREMENT</span>,
+    user_id <span class="sql-type">INT</span> <span class="sql-keyword">NOT NULL</span>,
+    business_name <span class="sql-type">VARCHAR(255)</span>,
+    description <span class="sql-type">TEXT</span>,
+    experience_years <span class="sql-type">INT</span>,
+    license_number <span class="sql-type">VARCHAR(100)</span>,
+    insurance_info <span class="sql-type">TEXT</span>,
+    service_radius <span class="sql-type">INT</span>,
+    latitude <span class="sql-type">DECIMAL(10, 8)</span>,
+    longitude <span class="sql-type">DECIMAL(11, 8)</span>,
+    average_rating <span class="sql-type">DECIMAL(3, 2)</span> <span class="sql-keyword">DEFAULT</span> <span class="sql-value">0</span>,
+    total_reviews <span class="sql-type">INT</span> <span class="sql-keyword">DEFAULT</span> <span class="sql-value">0</span>,
+    featured <span class="sql-type">BOOLEAN</span> <span class="sql-keyword">DEFAULT</span> <span class="sql-value">FALSE</span>,
+    verification_status <span class="sql-type">ENUM</span>(<span class="sql-value">'pending'</span>, <span class="sql-value">'verified'</span>, <span class="sql-value">'rejected'</span>) <span class="sql-keyword">DEFAULT</span> <span class="sql-value">'pending'</span>,
+    created_at <span class="sql-type">DATETIME</span> <span class="sql-keyword">DEFAULT</span> <span class="sql-keyword">CURRENT_TIMESTAMP</span>,
+    updated_at <span class="sql-type">DATETIME</span> <span class="sql-keyword">ON UPDATE</span> <span class="sql-keyword">CURRENT_TIMESTAMP</span>,
+    <span class="sql-keyword">FOREIGN KEY</span> (user_id) <span class="sql-keyword">REFERENCES</span> users(id) <span class="sql-keyword">ON DELETE CASCADE</span>
+);</code></pre>
+    </div>
+
+    <h2 id="role-permission">2. Role & Permission Management</h2>
+    <div class="section-content">
+        <h3>Roles Table</h3>
+        <pre><code><span class="sql-keyword">CREATE TABLE</span> roles (
+    id <span class="sql-type">INT</span> <span class="sql-keyword">PRIMARY KEY</span> <span class="sql-keyword">AUTO_INCREMENT</span>,
+    name <span class="sql-type">VARCHAR(100)</span> <span class="sql-keyword">NOT NULL</span>,
+    description <span class="sql-type">TEXT</span>,
+    is_system <span class="sql-type">BOOLEAN</span> <span class="sql-keyword">DEFAULT</span> <span class="sql-value">FALSE</span>,
+    created_at <span class="sql-type">DATETIME</span> <span class="sql-keyword">DEFAULT</span> <span class="sql-keyword">CURRENT_TIMESTAMP</span>,
+    updated_at <span class="sql-type">DATETIME</span> <span class="sql-keyword">ON UPDATE</span> <span class="sql-keyword">CURRENT_TIMESTAMP</span>
+);</code></pre>
+
+        <h3>Permissions Table</h3>
+        <pre><code><span class="sql-keyword">CREATE TABLE</span> permissions (
+    id <span class="sql-type">INT</span> <span class="sql-keyword">PRIMARY KEY</span> <span class="sql-keyword">AUTO_INCREMENT</span>,
+    name <span class="sql-type">VARCHAR(100)</span> <span class="sql-keyword">NOT NULL</span>,
+    description <span class="sql-type">TEXT</span>,
+    module <span class="sql-type">VARCHAR(100)</span> <span class="sql-keyword">NOT NULL</span>,
+    created_at <span class="sql-type">DATETIME</span> <span class="sql-keyword">DEFAULT</span> <span class="sql-keyword">CURRENT_TIMESTAMP</span>,
+    updated_at <span class="sql-type">DATETIME</span> <span class="sql-keyword">ON UPDATE</span> <span class="sql-keyword">CURRENT_TIMESTAMP</span>
+);</code></pre>
+
+        <h3>Role Permissions Table</h3>
+        <pre><code><span class="sql-keyword">CREATE TABLE</span> role_permissions (
+    role_id <span class="sql-type">INT</span> <span class="sql-keyword">NOT NULL</span>,
+    permission_id <span class="sql-type">INT</span> <span class="sql-keyword">NOT NULL</span>,
+    <span class="sql-keyword">PRIMARY KEY</span> (role_id, permission_id),
+    <span class="sql-keyword">FOREIGN KEY</span> (role_id) <span class="sql-keyword">REFERENCES</span> roles(id) <span class="sql-keyword">ON DELETE CASCADE</span>,
+    <span class="sql-keyword">FOREIGN KEY</span> (permission_id) <span class="sql-keyword">REFERENCES</span> permissions(id) <span class="sql-keyword">ON DELETE CASCADE</span>
+);</code></pre>
+
+        <h3>User Roles Table</h3>
+        <pre><code><span class="sql-keyword">CREATE TABLE</span> user_roles (
+    user_id <span class="sql-type">INT</span> <span class="sql-keyword">NOT NULL</span>,
+    role_id <span class="sql-type">INT</span> <span class="sql-keyword">NOT NULL</span>,
+    <span class="sql-keyword">PRIMARY KEY</span> (user_id, role_id),
+    <span class="sql-keyword">FOREIGN KEY</span> (user_id) <span class="sql-keyword">REFERENCES</span> users(id) <span class="sql-keyword">ON DELETE CASCADE</span>,
+    <span class="sql-keyword">FOREIGN KEY</span> (role_id) <span class="sql-keyword">REFERENCES</span> roles(id) <span class="sql-keyword">ON DELETE CASCADE</span>
+);</code></pre>
+    </div>
+
+    <h2 id="service-management">3. Service Management</h2>
+    <div class="section-content">
+        <h3>Service Categories Table</h3>
+        <pre><code><span class="sql-keyword">CREATE TABLE</span> service_categories (
+    id <span class="sql-type">INT</span> <span class="sql-keyword">PRIMARY KEY</span> <span class="sql-keyword">AUTO_INCREMENT</span>,
+    name <span class="sql-type">VARCHAR(100)</span> <span class="sql-keyword">NOT NULL</span>,
+    description <span class="sql-type">TEXT</span>,
+    icon <span class="sql-type">VARCHAR(255)</span>,
+    parent_id <span class="sql-type">INT</span> <span class="sql-keyword">NULL</span>,
+    status <span class="sql-type">ENUM</span>(<span class="sql-value">'active'</span>, <span class="sql-value">'inactive'</span>) <span class="sql-keyword">DEFAULT</span> <span class="sql-value">'active'</span>,
+    created_at <span class="sql-type">DATETIME</span> <span class="sql-keyword">DEFAULT</span> <span class="sql-keyword">CURRENT_TIMESTAMP</span>,
+    updated_at <span class="sql-type">DATETIME</span> <span class="sql-keyword">ON UPDATE</span> <span class="sql-keyword">CURRENT_TIMESTAMP</span>,
+    <span class="sql-keyword">FOREIGN KEY</span> (parent_id) <span class="sql-keyword">REFERENCES</span> service_categories(id) <span class="sql-keyword">ON DELETE SET NULL</span>
+);</code></pre>
+
+        <h3>Services Table</h3>
+        <pre><code><span class="sql-keyword">CREATE TABLE</span> services (
+    id <span class="sql-type">INT</span> <span class="sql-keyword">PRIMARY KEY</span> <span class="sql-keyword">AUTO_INCREMENT</span>,
+    handyman_id <span class="sql-type">INT</span> <span class="sql-keyword">NOT NULL</span>,
+    category_id <span class="sql-type">INT</span> <span class="sql-keyword">NOT NULL</span>,
+    title <span class="sql-type">VARCHAR(255)</span> <span class="sql-keyword">NOT NULL</span>,
+    description <span class="sql-type">TEXT</span>,
+    price <span class="sql-type">DECIMAL(10, 2)</span>,
+    price_type <span class="sql-type">ENUM</span>(<span class="sql-value">'fixed'</span>, <span class="sql-value">'hourly'</span>, <span class="sql-value">'quote'</span>) <span class="sql-keyword">DEFAULT</span> <span class="sql-value">'fixed'</span>,
+    duration <span class="sql-type">INT</span>, <span class="sql-comment">/* in minutes */</span>
+    cancellation_policy <span class="sql-type">TEXT</span>,
+    status <span class="sql-type">ENUM</span>(<span class="sql-value">'active'</span>, <span class="sql-value">'inactive'</span>) <span class="sql-keyword">DEFAULT</span> <span class="sql-value">'active'</span>,
+    created_at <span class="sql-type">DATETIME</span> <span class="sql-keyword">DEFAULT</span> <span class="sql-keyword">CURRENT_TIMESTAMP</span>,
+    updated_at <span class="sql-type">DATETIME</span> <span class="sql-keyword">ON UPDATE</span> <span class="sql-keyword">CURRENT_TIMESTAMP</span>,
+    <span class="sql-keyword">FOREIGN KEY</span> (handyman_id) <span class="sql-keyword">REFERENCES</span> handyman_profiles(id) <span class="sql-keyword">ON DELETE CASCADE</span>,
+    <span class="sql-keyword">FOREIGN KEY</span> (category_id) <span class="sql-keyword">REFERENCES</span> service_categories(id) <span class="sql-keyword">ON DELETE CASCADE</span>
+);</code></pre>
+
+        <h3>Service Images Table</h3>
+        <pre><code><span class="sql-keyword">CREATE TABLE</span> service_images (
+    id <span class="sql-type">INT</span> <span class="sql-keyword">PRIMARY KEY</span> <span class="sql-keyword">AUTO_INCREMENT</span>,
+    service_id <span class="sql-type">INT</span> <span class="sql-keyword">NOT NULL</span>,
+    image_path <span class="sql-type">VARCHAR(255)</span> <span class="sql-keyword">NOT NULL</span>,
+    is_primary <span class="sql-type">BOOLEAN</span> <span class="sql-keyword">DEFAULT</span> <span class="sql-value">FALSE</span>,
+    created_at <span class="sql-type">DATETIME</span> <span class="sql-keyword">DEFAULT</span> <span class="sql-keyword">CURRENT_TIMESTAMP</span>,
+    <span class="sql-keyword">FOREIGN KEY</span> (service_id) <span class="sql-keyword">REFERENCES</span> services(id) <span class="sql-keyword">ON DELETE CASCADE</span>
+);</code></pre>
+
+        <h3>Service Tags Table</h3>
+        <pre><code><span class="sql-keyword">CREATE TABLE</span> service_tags (
+    id <span class="sql-type">INT</span> <span class="sql-keyword">PRIMARY KEY</span> <span class="sql-keyword">AUTO_INCREMENT</span>,
+    name <span class="sql-type">VARCHAR(50)</span> <span class="sql-keyword">NOT NULL</span>,
+    created_at <span class="sql-type">DATETIME</span> <span class="sql-keyword">DEFAULT</span> <span class="sql-keyword">CURRENT_TIMESTAMP</span>
+);</code></pre>
+
+        <h3>Service Tag Relationships Table</h3>
+        <pre><code><span class="sql-keyword">CREATE TABLE</span> service_tag_relationships (
+    service_id <span class="sql-type">INT</span> <span class="sql-keyword">NOT NULL</span>,
+    tag_id <span class="sql-type">INT</span> <span class="sql-keyword">NOT NULL</span>,
+    <span class="sql-keyword">PRIMARY KEY</span> (service_id, tag_id),
+    <span class="sql-keyword">FOREIGN KEY</span> (service_id) <span class="sql-keyword">REFERENCES</span> services(id) <span class="sql-keyword">ON DELETE CASCADE</span>,
+    <span class="sql-keyword">FOREIGN KEY</span> (tag_id) <span class="sql-keyword">REFERENCES</span> service_tags(id) <span class="sql-keyword">ON DELETE CASCADE</span>
+);</code></pre>
+    </div>
+
+    <h2 id="booking-availability">4. Booking & Availability</h2>
+    <div class="section-content">
+        <h3>Availability Table</h3>
+        <pre><code><span class="sql-keyword">CREATE TABLE</span> availability (
+    id <span class="sql-type">INT</span> <span class="sql-keyword">PRIMARY KEY</span> <span class="sql-keyword">AUTO_INCREMENT</span>,
+    handyman_id <span class="sql-type">INT</span> <span class="sql-keyword">NOT NULL</span>,
+    day_of_week <span class="sql-type">TINYINT</span> <span class="sql-keyword">NOT NULL</span>, <span class="sql-comment">/* 0-6 for Sunday-Saturday */</span>
+    start_time <span class="sql-type">TIME</span> <span class="sql-keyword">NOT NULL</span>,
+    end_time <span class="sql-type">TIME</span> <span class="sql-keyword">NOT NULL</span>,
+    is_available <span class="sql-type">BOOLEAN</span> <span class="sql-keyword">DEFAULT</span> <span class="sql-value">TRUE</span>,
+    created_at <span class="sql-type">DATETIME</span> <span class="sql-keyword">DEFAULT</span> <span class="sql-keyword">CURRENT_TIMESTAMP</span>,
+    updated_at <span class="sql-type">DATETIME</span> <span class="sql-keyword">ON UPDATE</span> <span class="sql-keyword">CURRENT_TIMESTAMP</span>,
+    <span class="sql-keyword">FOREIGN KEY</span> (handyman_id) <span class="sql-keyword">REFERENCES</span> handyman_profiles(id) <span class="sql-keyword">ON DELETE CASCADE</span>
+);</code></pre>
+
+        <h3>Bookings Table</h3>
+        <pre><code><span class="sql-keyword">CREATE TABLE</span> bookings (
+    id <span class="sql-type">INT</span> <span class="sql-keyword">PRIMARY KEY</span> <span class="sql-keyword">AUTO_INCREMENT</span>,
+    service_id <span class="sql-type">INT</span> <span class="sql-keyword">NOT NULL</span>,
+    customer_id <span class="sql-type">INT</span> <span class="sql-keyword">NOT NULL</span>,
+    handyman_id <span class="sql-type">INT</span> <span class="sql-keyword">NOT NULL</span>,
+    booking_date <span class="sql-type">DATE</span> <span class="sql-keyword">NOT NULL</span>,
+    start_time <span class="sql-type">TIME</span> <span class="sql-keyword">NOT NULL</span>,
+    end_time <span class="sql-type">TIME</span>,
+    status <span class="sql-type">ENUM</span>(<span class="sql-value">'pending'</span>, <span class="sql-value">'confirmed'</span>, <span class="sql-value">'completed'</span>, <span class="sql-value">'cancelled'</span>, <span class="sql-value">'no-show'</span>) <span class="sql-keyword">DEFAULT</span> <span class="sql-value">'pending'</span>,
+    notes <span class="sql-type">TEXT</span>,
+    address <span class="sql-type">TEXT</span>,
+    city <span class="sql-type">VARCHAR(100)</span>,
+    state <span class="sql-type">VARCHAR(100)</span>,
+    zip_code <span class="sql-type">VARCHAR(20)</span>,
+    latitude <span class="sql-type">DECIMAL(10, 8)</span>,
+    longitude <span class="sql-type">DECIMAL(11, 8)</span>,
+    created_at <span class="sql-type">DATETIME</span> <span class="sql-keyword">DEFAULT</span> <span class="sql-keyword">CURRENT_TIMESTAMP</span>,
+    updated_at <span class="sql-type">DATETIME</span> <span class="sql-keyword">ON UPDATE</span> <span class="sql-keyword">CURRENT_TIMESTAMP</span>,
+    <span class="sql-keyword">FOREIGN KEY</span> (service_id) <span class="sql-keyword">REFERENCES</span> services(id) <span class="sql-keyword">ON DELETE CASCADE</span>,
+    <span class="sql-keyword">FOREIGN KEY</span> (customer_id) <span class="sql-keyword">REFERENCES</span> users(id) <span class="sql-keyword">ON DELETE CASCADE</span>,
+    <span class="sql-keyword">FOREIGN KEY</span> (handyman_id) <span class="sql-keyword">REFERENCES</span> handyman_profiles(id) <span class="sql-keyword">ON DELETE CASCADE</span>
+);</code></pre>
+    </div>
+
+    <h2 id="payment-financial">5. Payment & Financial Management</h2>
+    <div class="section-content">
+        <h3>Payments Table</h3>
+        <pre><code><span class="sql-keyword">CREATE TABLE</span> payments (
+    id <span class="sql-type">INT</span> <span class="sql-keyword">PRIMARY KEY</span> <span class="sql-keyword">AUTO_INCREMENT</span>,
+    booking_id <span class="sql-type">INT</span> <span class="sql-keyword">NOT NULL</span>,
+    amount <span class="sql-type">DECIMAL(10, 2)</span> <span class="sql-keyword">NOT NULL</span>,
+    payment_method <span class="sql-type">VARCHAR(50)</span>,
+    transaction_id <span class="sql-type">VARCHAR(255)</span>,
+    status <span class="sql-type">ENUM</span>(<span class="sql-value">'pending'</span>, <span class="sql-value">'completed'</span>, <span class="sql-value">'failed'</span>, <span class="sql-value">'refunded'</span>) <span class="sql-keyword">DEFAULT</span> <span class="sql-value">'pending'</span>,
+    payment_date <span class="sql-type">DATETIME</span>,
+    platform_fee <span class="sql-type">DECIMAL(10, 2)</span>,
+    handyman_payout <span class="sql-type">DECIMAL(10, 2)</span>,
+    notes <span class="sql-type">TEXT</span>,
+    created_at <span class="sql-type">DATETIME</span> <span class="sql-keyword">DEFAULT</span> <span class="sql-keyword">CURRENT_TIMESTAMP</span>,
+    updated_at <span class="sql-type">DATETIME</span> <span class="sql-keyword">ON UPDATE</span> <span class="sql-keyword">CURRENT_TIMESTAMP</span>,
+    <span class="sql-keyword">FOREIGN KEY</span> (booking_id) <span class="sql-keyword">REFERENCES</span> bookings(id) <span class="sql-keyword">ON DELETE CASCADE</span>
+);</code></pre>
+
+        <h3>Wallets Table</h3>
+        <pre><code><span class="sql-keyword">CREATE TABLE</span> wallets (
+    id <span class="sql-type">INT</span> <span class="sql-keyword">PRIMARY KEY</span> <span class="sql-keyword">AUTO_INCREMENT</span>,
+    user_id <span class="sql-type">INT</span> <span class="sql-keyword">NOT NULL</span> <span class="sql-keyword">UNIQUE</span>,
+    balance <span class="sql-type">DECIMAL(10,2)</span> <span class="sql-keyword">DEFAULT</span> <span class="sql-value">0.00</span>,
+    created_at <span class="sql-type">DATETIME</span> <span class="sql-keyword">DEFAULT</span> <span class="sql-keyword">CURRENT_TIMESTAMP</span>,
+    updated_at <span class="sql-type">DATETIME</span> <span class="sql-keyword">ON UPDATE</span> <span class="sql-keyword">CURRENT_TIMESTAMP</span>,
+    <span class="sql-keyword">FOREIGN KEY</span> (user_id) <span class="sql-keyword">REFERENCES</span> users(id) <span class="sql-keyword">ON DELETE CASCADE</span>
+);</code></pre>
+
+        <h3>Wallet Transactions Table</h3>
+        <pre><code><span class="sql-keyword">CREATE TABLE</span> wallet_transactions (
+    id <span class="sql-type">INT</span> <span class="sql-keyword">PRIMARY KEY</span> <span class="sql-keyword">AUTO_INCREMENT</span>,
+    wallet_id <span class="sql-type">INT</span> <span class="sql-keyword">NOT NULL</span>,
+    amount <span class="sql-type">DECIMAL(10,2)</span> <span class="sql-keyword">NOT NULL</span>,
+    type <span class="sql-type">ENUM</span>(<span class="sql-value">'credit'</span>, <span class="sql-value">'debit'</span>) <span class="sql-keyword">NOT NULL</span>,
+    description <span class="sql-type">TEXT</span>,
+    transaction_type <span class="sql-type">ENUM</span>(<span class="sql-value">'booking'</span>, <span class="sql-value">'refund'</span>, <span class="sql-value">'withdrawal'</span>, <span class="sql-value">'deposit'</span>, <span class="sql-value">'commission'</span>, <span class="sql-value">'bonus'</span>, <span class="sql-value">'other'</span>) <span class="sql-keyword">NOT NULL</span>,
+    reference_id <span class="sql-type">INT</span> <span class="sql-comment">/* ID of related entity (booking, payment, etc.) */</span>,
+    status <span class="sql-type">ENUM</span>(<span class="sql-value">'pending'</span>, <span class="sql-value">'completed'</span>, <span class="sql-value">'failed'</span>, <span class="sql-value">'cancelled'</span>) <span class="sql-keyword">DEFAULT</span> <span class="sql-value">'completed'</span>,
+    created_at <span class="sql-type">DATETIME</span> <span class="sql-keyword">DEFAULT</span> <span class="sql-keyword">CURRENT_TIMESTAMP</span>,
+    updated_at <span class="sql-type">DATETIME</span> <span class="sql-keyword">ON UPDATE</span> <span class="sql-keyword">CURRENT_TIMESTAMP</span>,
+    <span class="sql-keyword">FOREIGN KEY</span> (wallet_id) <span class="sql-keyword">REFERENCES</span> wallets(id) <span class="sql-keyword">ON DELETE CASCADE</span>
+);</code></pre>
+    </div>
+
+    <h2 id="tax-management">6. Tax Management</h2>
+    <div class="section-content">
+        <h3>Tax Rates Table</h3>
+        <pre><code><span class="sql-keyword">CREATE TABLE</span> tax_rates (
+    id <span class="sql-type">INT</span> <span class="sql-keyword">PRIMARY KEY</span> <span class="sql-keyword">AUTO_INCREMENT</span>,
+    name <span class="sql-type">VARCHAR(100)</span> <span class="sql-keyword">NOT NULL</span>,
+    rate <span class="sql-type">DECIMAL(5,2)</span> <span class="sql-keyword">NOT NULL</span>,
+    country <span class="sql-type">VARCHAR(100)</span>,
+    state <span class="sql-type">VARCHAR(100)</span>,
+    zip_code <span class="sql-type">VARCHAR(20)</span>,
+    is_default <span class="sql-type">BOOLEAN</span> <span class="sql-keyword">DEFAULT</span> <span class="sql-value">FALSE</span>,
+    status <span class="sql-type">ENUM</span>(<span class="sql-value">'active'</span>, <span class="sql-value">'inactive'</span>) <span class="sql-keyword">DEFAULT</span> <span class="sql-value">'active'</span>,
+    created_at <span class="sql-type">DATETIME</span> <span class="sql-keyword">DEFAULT</span> <span class="sql-keyword">CURRENT_TIMESTAMP</span>,
+    updated_at <span class="sql-type">DATETIME</span> <span class="sql-keyword">ON UPDATE</span> <span class="sql-keyword">CURRENT_TIMESTAMP</span>
+);</code></pre>
+
+        <h3>Service Taxes Table</h3>
+        <pre><code><span class="sql-keyword">CREATE TABLE</span> service_taxes (
+    id <span class="sql-type">INT</span> <span class="sql-keyword">PRIMARY KEY</span> <span class="sql-keyword">AUTO_INCREMENT</span>,
+    service_id <span class="sql-type">INT</span> <span class="sql-keyword">NOT NULL</span>,
+    tax_rate_id <span class="sql-type">INT</span> <span class="sql-keyword">NOT NULL</span>,
+    created_at <span class="sql-type">DATETIME</span> <span class="sql-keyword">DEFAULT</span> <span class="sql-keyword">CURRENT_TIMESTAMP</span>,
+    <span class="sql-keyword">FOREIGN KEY</span> (service_id) <span class="sql-keyword">REFERENCES</span> services(id) <span class="sql-keyword">ON DELETE CASCADE</span>,
+    <span class="sql-keyword">FOREIGN KEY</span> (tax_rate_id) <span class="sql-keyword">REFERENCES</span> tax_rates(id) <span class="sql-keyword">ON DELETE CASCADE</span>
+);</code></pre>
+
+        <h3>Booking Taxes Table</h3>
+        <pre><code><span class="sql-keyword">CREATE TABLE</span> booking_taxes (
+    id <span class="sql-type">INT</span> <span class="sql-keyword">PRIMARY KEY</span> <span class="sql-keyword">AUTO_INCREMENT</span>,
+    booking_id <span class="sql-type">INT</span> <span class="sql-keyword">NOT NULL</span>,
+    tax_rate_id <span class="sql-type">INT</span> <span class="sql-keyword">NOT NULL</span>,
+    tax_amount <span class="sql-type">DECIMAL(10,2)</span> <span class="sql-keyword">NOT NULL</span>,
+    created_at <span class="sql-type">DATETIME</span> <span class="sql-keyword">DEFAULT</span> <span class="sql-keyword">CURRENT_TIMESTAMP</span>,
+    <span class="sql-keyword">FOREIGN KEY</span> (booking_id) <span class="sql-keyword">REFERENCES</span> bookings(id) <span class="sql-keyword">ON DELETE CASCADE</span>,
+    <span class="sql-keyword">FOREIGN KEY</span> (tax_rate_id) <span class="sql-keyword">REFERENCES</span> tax_rates(id) <span class="sql-keyword">ON DELETE CASCADE</span>
+);</code></pre>
+    </div>
+
+    <h2 id="review-system">7. Review System</h2>
+    <div class="section-content">
+        <h3>Reviews Table</h3>
+        <pre><code><span class="sql-keyword">CREATE TABLE</span> reviews (
+    id <span class="sql-type">INT</span> <span class="sql-keyword">PRIMARY KEY</span> <span class="sql-keyword">AUTO_INCREMENT</span>,
+    booking_id <span class="sql-type">INT</span> <span class="sql-keyword">NOT NULL</span>,
+    customer_id <span class="sql-type">INT</span> <span class="sql-keyword">NOT NULL</span>,
+    handyman_id <span class="sql-type">INT</span> <span class="sql-keyword">NOT NULL</span>,
+    rating <span class="sql-type">TINYINT</span> <span class="sql-keyword">NOT NULL</span>, <span class="sql-comment">/* 1-5 */</span>
+    review_text <span class="sql-type">TEXT</span>,
+    handyman_response <span class="sql-type">TEXT</span>,
+    status <span class="sql-type">ENUM</span>(<span class="sql-value">'pending'</span>, <span class="sql-value">'approved'</span>, <span class="sql-value">'rejected'</span>) <span class="sql-keyword">DEFAULT</span> <span class="sql-value">'pending'</span>,
+    created_at <span class="sql-type">DATETIME</span> <span class="sql-keyword">DEFAULT</span> <span class="sql-keyword">CURRENT_TIMESTAMP</span>,
+    updated_at <span class="sql-type">DATETIME</span> <span class="sql-keyword">ON UPDATE</span> <span class="sql-keyword">CURRENT_TIMESTAMP</span>,
+    <span class="sql-keyword">FOREIGN KEY</span> (booking_id) <span class="sql-keyword">REFERENCES</span> bookings(id) <span class="sql-keyword">ON DELETE CASCADE</span>,
+    <span class="sql-keyword">FOREIGN KEY</span> (customer_id) <span class="sql-keyword">REFERENCES</span> users(id) <span class="sql-keyword">ON DELETE CASCADE</span>,
+    <span class="sql-keyword">FOREIGN KEY</span> (handyman_id) <span class="sql-keyword">REFERENCES</span> handyman_profiles(id) <span class="sql-keyword">ON DELETE CASCADE</span>
+);</code></pre>
+    </div>
+
+    <h2 id="communication">8. Communication System</h2>
+    <div class="section-content">
+        <h3>Messages Table</h3>
+        <pre><code><span class="sql-keyword">CREATE TABLE</span> messages (
+    id <span class="sql-type">INT</span> <span class="sql-keyword">PRIMARY KEY</span> <span class="sql-keyword">AUTO_INCREMENT</span>,
+    sender_id <span class="sql-type">INT</span> <span class="sql-keyword">NOT NULL</span>,
+    receiver_id <span class="sql-type">INT</span> <span class="sql-keyword">NOT NULL</span>,
+    booking_id <span class="sql-type">INT</span>,
+    message <span class="sql-type">TEXT</span> <span class="sql-keyword">NOT NULL</span>,
+    is_read <span class="sql-type">BOOLEAN</span> <span class="sql-keyword">DEFAULT</span> <span class="sql-value">FALSE</span>,
+    created_at <span class="sql-type">DATETIME</span> <span class="sql-keyword">DEFAULT</span> <span class="sql-keyword">CURRENT_TIMESTAMP</span>,
+    <span class="sql-keyword">FOREIGN KEY</span> (sender_id) <span class="sql-keyword">REFERENCES</span> users(id) <span class="sql-keyword">ON DELETE CASCADE</span>,
+    <span class="sql-keyword">FOREIGN KEY</span> (receiver_id) <span class="sql-keyword">REFERENCES</span> users(id) <span class="sql-keyword">ON DELETE CASCADE</span>,
+    <span class="sql-keyword">FOREIGN KEY</span> (booking_id) <span class="sql-keyword">REFERENCES</span> bookings(id) <span class="sql-keyword">ON DELETE SET NULL</span>
+);</code></pre>
+
+        <h3>Notifications Table</h3>
+        <pre><code><span class="sql-keyword">CREATE TABLE</span> notifications (
+    id <span class="sql-type">INT</span> <span class="sql-keyword">PRIMARY KEY</span> <span class="sql-keyword">AUTO_INCREMENT</span>,
+    user_id <span class="sql-type">INT</span> <span class="sql-keyword">NOT NULL</span>,
+    type <span class="sql-type">VARCHAR(50)</span> <span class="sql-keyword">NOT NULL</span>,
+    title <span class="sql-type">VARCHAR(255)</span> <span class="sql-keyword">NOT NULL</span>,
+    message <span class="sql-type">TEXT</span> <span class="sql-keyword">NOT NULL</span>,
+    is_read <span class="sql-type">BOOLEAN</span> <span class="sql-keyword">DEFAULT</span> <span class="sql-value">FALSE</span>,
+    related_id <span class="sql-type">INT</span>, <span class="sql-comment">/* ID of related entity (booking, message, etc.) */</span>
+    created_at <span class="sql-type">DATETIME</span> <span class="sql-keyword">DEFAULT</span> <span class="sql-keyword">CURRENT_TIMESTAMP</span>,
+    <span class="sql-keyword">FOREIGN KEY</span> (user_id) <span class="sql-keyword">REFERENCES</span> users(id) <span class="sql-keyword">ON DELETE CASCADE</span>
+);</code></pre>
+    </div>
+
+    <h2 id="email-system">9. Email System</h2>
+    <div class="section-content">
+        <h3>Email Templates Table</h3>
+        <pre><code><span class="sql-keyword">CREATE TABLE</span> email_templates (
+    id <span class="sql-type">INT</span> <span class="sql-keyword">PRIMARY KEY</span> <span class="sql-keyword">AUTO_INCREMENT</span>,
+    name <span class="sql-type">VARCHAR(100)</span> <span class="sql-keyword">NOT NULL</span>,
+    subject <span class="sql-type">VARCHAR(255)</span> <span class="sql-keyword">NOT NULL</span>,
+    body <span class="sql-type">TEXT</span> <span class="sql-keyword">NOT NULL</span>,
+    variables <span class="sql-type">TEXT</span> <span class="sql-comment">/* JSON array of available variables */</span>,
+    type <span class="sql-type">ENUM</span>(<span class="sql-value">'welcome'</span>, <span class="sql-value">'booking'</span>, <span class="sql-value">'payment'</span>, <span class="sql-value">'review'</span>, <span class="sql-value">'reset_password'</span>, <span class="sql-value">'verification'</span>, <span class="sql-value">'custom'</span>) <span class="sql-keyword">NOT NULL</span>,
+    status <span class="sql-type">ENUM</span>(<span class="sql-value">'active'</span>, <span class="sql-value">'inactive'</span>) <span class="sql-keyword">DEFAULT</span> <span class="sql-value">'active'</span>,
+    created_at <span class="sql-type">DATETIME</span> <span class="sql-keyword">DEFAULT</span> <span class="sql-keyword">CURRENT_TIMESTAMP</span>,
+    updated_at <span class="sql-type">DATETIME</span> <span class="sql-keyword">ON UPDATE</span> <span class="sql-keyword">CURRENT_TIMESTAMP</span>
+);</code></pre>
+
+        <h3>Email Logs Table</h3>
+        <pre><code><span class="sql-keyword">CREATE TABLE</span> email_logs (
+    id <span class="sql-type">INT</span> <span class="sql-keyword">PRIMARY KEY</span> <span class="sql-keyword">AUTO_INCREMENT</span>,
+    template_id <span class="sql-type">INT</span>,
+    recipient_email <span class="sql-type">VARCHAR(255)</span> <span class="sql-keyword">NOT NULL</span>,
+    recipient_id <span class="sql-type">INT</span>,
+    subject <span class="sql-type">VARCHAR(255)</span> <span class="sql-keyword">NOT NULL</span>,
+    body <span class="sql-type">TEXT</span> <span class="sql-keyword">NOT NULL</span>,
+    status <span class="sql-type">ENUM</span>(<span class="sql-value">'sent'</span>, <span class="sql-value">'failed'</span>, <span class="sql-value">'pending'</span>) <span class="sql-keyword">DEFAULT</span> <span class="sql-value">'pending'</span>,
+    error_message <span class="sql-type">TEXT</span>,
+    sent_at <span class="sql-type">DATETIME</span>,
+    created_at <span class="sql-type">DATETIME</span> <span class="sql-keyword">DEFAULT</span> <span class="sql-keyword">CURRENT_TIMESTAMP</span>,
+    <span class="sql-keyword">FOREIGN KEY</span> (template_id) <span class="sql-keyword">REFERENCES</span> email_templates(id) <span class="sql-keyword">ON DELETE SET NULL</span>,
+    <span class="sql-keyword">FOREIGN KEY</span> (recipient_id) <span class="sql-keyword">REFERENCES</span> users(id) <span class="sql-keyword">ON DELETE SET NULL</span>
+);</code></pre>
+    </div>
+
+    <h2 id="notification-system">10. Notification System</h2>
+    <div class="section-content">
+        <h3>Notification Templates Table</h3>
+        <pre><code><span class="sql-keyword">CREATE TABLE</span> notification_templates (
+    id <span class="sql-type">INT</span> <span class="sql-keyword">PRIMARY KEY</span> <span class="sql-keyword">AUTO_INCREMENT</span>,
+    name <span class="sql-type">VARCHAR(100)</span> <span class="sql-keyword">NOT NULL</span>,
+    type <span class="sql-type">ENUM</span>(<span class="sql-value">'email'</span>, <span class="sql-value">'push'</span>, <span class="sql-value">'sms'</span>, <span class="sql-value">'in_app'</span>) <span class="sql-keyword">NOT NULL</span>,
+    event_type <span class="sql-type">VARCHAR(100)</span> <span class="sql-keyword">NOT NULL</span> <span class="sql-comment">/* booking_created, payment_received, etc. */</span>,
+    title <span class="sql-type">VARCHAR(255)</span> <span class="sql-keyword">NOT NULL</span>,
+    content <span class="sql-type">TEXT</span> <span class="sql-keyword">NOT NULL</span>,
+    variables <span class="sql-type">TEXT</span> <span class="sql-comment">/* JSON array of available variables */</span>,
+    status <span class="sql-type">ENUM</span>(<span class="sql-value">'active'</span>, <span class="sql-value">'inactive'</span>) <span class="sql-keyword">DEFAULT</span> <span class="sql-value">'active'</span>,
+    created_at <span class="sql-type">DATETIME</span> <span class="sql-keyword">DEFAULT</span> <span class="sql-keyword">CURRENT_TIMESTAMP</span>,
+    updated_at <span class="sql-type">DATETIME</span> <span class="sql-keyword">ON UPDATE</span> <span class="sql-keyword">CURRENT_TIMESTAMP</span>
+);</code></pre>
+
+        <h3>Push Notification Devices Table</h3>
+        <pre><code><span class="sql-keyword">CREATE TABLE</span> push_notification_devices (
+    id <span class="sql-type">INT</span> <span class="sql-keyword">PRIMARY KEY</span> <span class="sql-keyword">AUTO_INCREMENT</span>,
+    user_id <span class="sql-type">INT</span> <span class="sql-keyword">NOT NULL</span>,
+    device_token <span class="sql-type">VARCHAR(255)</span> <span class="sql-keyword">NOT NULL</span>,
+    device_type <span class="sql-type">ENUM</span>(<span class="sql-value">'ios'</span>, <span class="sql-value">'android'</span>, <span class="sql-value">'web'</span>) <span class="sql-keyword">NOT NULL</span>,
+    is_active <span class="sql-type">BOOLEAN</span> <span class="sql-keyword">DEFAULT</span> <span class="sql-value">TRUE</span>,
+    created_at <span class="sql-type">DATETIME</span> <span class="sql-keyword">DEFAULT</span> <span class="sql-keyword">CURRENT_TIMESTAMP</span>,
+    updated_at <span class="sql-type">DATETIME</span> <span class="sql-keyword">ON UPDATE</span> <span class="sql-keyword">CURRENT_TIMESTAMP</span>,
+    <span class="sql-keyword">FOREIGN KEY</span> (user_id) <span class="sql-keyword">REFERENCES</span> users(id) <span class="sql-keyword">ON DELETE CASCADE</span>
+);</code></pre>
+
+        <h3>Push Notification Logs Table</h3>
+        <pre><code><span class="sql-keyword">CREATE TABLE</span> push_notification_logs (
+    id <span class="sql-type">INT</span> <span class="sql-keyword">PRIMARY KEY</span> <span class="sql-keyword">AUTO_INCREMENT</span>,
+    user_id <span class="sql-type">INT</span>,
+    device_id <span class="sql-type">INT</span>,
+    title <span class="sql-type">VARCHAR(255)</span> <span class="sql-keyword">NOT NULL</span>,
+    message <span class="sql-type">TEXT</span> <span class="sql-keyword">NOT NULL</span>,
+    data <span class="sql-type">TEXT</span> <span class="sql-comment">/* JSON data payload */</span>,
+    status <span class="sql-type">ENUM</span>(<span class="sql-value">'sent'</span>, <span class="sql-value">'failed'</span>, <span class="sql-value">'pending'</span>) <span class="sql-keyword">DEFAULT</span> <span class="sql-value">'pending'</span>,
+    error_message <span class="sql-type">TEXT</span>,
+    sent_at <span class="sql-type">DATETIME</span>,
+    created_at <span class="sql-type">DATETIME</span> <span class="sql-keyword">DEFAULT</span> <span class="sql-keyword">CURRENT_TIMESTAMP</span>,
+    <span class="sql-keyword">FOREIGN KEY</span> (user_id) <span class="sql-keyword">REFERENCES</span> users(id) <span class="sql-keyword">ON DELETE SET NULL</span>,
+    <span class="sql-keyword">FOREIGN KEY</span> (device_id) <span class="sql-keyword">REFERENCES</span> push_notification_devices(id) <span class="sql-keyword">ON DELETE SET NULL</span>
+);</code></pre>
+    </div>
+
+    <h2 id="subscription-plan">11. Subscription & Plan Management</h2>
+    <div class="section-content">
+        <h3>Subscription Plans Table</h3>
+        <pre><code><span class="sql-keyword">CREATE TABLE</span> subscription_plans (
+    id <span class="sql-type">INT</span> <span class="sql-keyword">PRIMARY KEY</span> <span class="sql-keyword">AUTO_INCREMENT</span>,
+    name <span class="sql-type">VARCHAR(100)</span> <span class="sql-keyword">NOT NULL</span>,
+    description <span class="sql-type">TEXT</span>,
+    price <span class="sql-type">DECIMAL(10,2)</span> <span class="sql-keyword">NOT NULL</span>,
+    duration <span class="sql-type">INT</span> <span class="sql-keyword">NOT NULL</span> <span class="sql-comment">/* Duration in days */</span>,
+    features <span class="sql-type">TEXT</span> <span class="sql-comment">/* JSON array of features */</span>,
+    max_services <span class="sql-type">INT</span> <span class="sql-keyword">DEFAULT</span> <span class="sql-value">10</span>,
+    featured_services <span class="sql-type">INT</span> <span class="sql-keyword">DEFAULT</span> <span class="sql-value">0</span>,
+    is_featured <span class="sql-type">BOOLEAN</span> <span class="sql-keyword">DEFAULT</span> <span class="sql-value">FALSE</span>,
+    status <span class="sql-type">ENUM</span>(<span class="sql-value">'active'</span>, <span class="sql-value">'inactive'</span>) <span class="sql-keyword">DEFAULT</span> <span class="sql-value">'active'</span>,
+    created_at <span class="sql-type">DATETIME</span> <span class="sql-keyword">DEFAULT</span> <span class="sql-keyword">CURRENT_TIMESTAMP</span>,
+    updated_at <span class="sql-type">DATETIME</span> <span class="sql-keyword">ON UPDATE</span> <span class="sql-keyword">CURRENT_TIMESTAMP</span>
+);</code></pre>
+
+        <h3>User Subscriptions Table</h3>
+        <pre><code><span class="sql-keyword">CREATE TABLE</span> user_subscriptions (
+    id <span class="sql-type">INT</span> <span class="sql-keyword">PRIMARY KEY</span> <span class="sql-keyword">AUTO_INCREMENT</span>,
+    user_id <span class="sql-type">INT</span> <span class="sql-keyword">NOT NULL</span>,
+    plan_id <span class="sql-type">INT</span> <span class="sql-keyword">NOT NULL</span>,
+    start_date <span class="sql-type">DATETIME</span> <span class="sql-keyword">NOT NULL</span>,
+    end_date <span class="sql-type">DATETIME</span> <span class="sql-keyword">NOT NULL</span>,
+    status <span class="sql-type">ENUM</span>(<span class="sql-value">'active'</span>, <span class="sql-value">'expired'</span>, <span class="sql-value">'cancelled'</span>) <span class="sql-keyword">DEFAULT</span> <span class="sql-value">'active'</span>,
+    payment_id <span class="sql-type">INT</span>,
+    auto_renew <span class="sql-type">BOOLEAN</span> <span class="sql-keyword">DEFAULT</span> <span class="sql-value">FALSE</span>,
+    created_at <span class="sql-type">DATETIME</span> <span class="sql-keyword">DEFAULT</span> <span class="sql-keyword">CURRENT_TIMESTAMP</span>,
+    updated_at <span class="sql-type">DATETIME</span> <span class="sql-keyword">ON UPDATE</span> <span class="sql-keyword">CURRENT_TIMESTAMP</span>,
+    <span class="sql-keyword">FOREIGN KEY</span> (user_id) <span class="sql-keyword">REFERENCES</span> users(id) <span class="sql-keyword">ON DELETE CASCADE</span>,
+    <span class="sql-keyword">FOREIGN KEY</span> (plan_id) <span class="sql-keyword">REFERENCES</span> subscription_plans(id) <span class="sql-keyword">ON DELETE CASCADE</span>,
+    <span class="sql-keyword">FOREIGN KEY</span> (payment_id) <span class="sql-keyword">REFERENCES</span> payments(id) <span class="sql-keyword">ON DELETE SET NULL</span>
+);</code></pre>
+    </div>
+
+    <h2 id="affiliate-system">12. Affiliate System</h2>
+    <div class="section-content">
+        <h3>Affiliates Table</h3>
+        <pre><code><span class="sql-keyword">CREATE TABLE</span> affiliates (
+    id <span class="sql-type">INT</span> <span class="sql-keyword">PRIMARY KEY</span> <span class="sql-keyword">AUTO_INCREMENT</span>,
+    user_id <span class="sql-type">INT</span> <span class="sql-keyword">NOT NULL</span>,
+    affiliate_code <span class="sql-type">VARCHAR(50)</span> <span class="sql-keyword">UNIQUE NOT NULL</span>,
+    commission_rate <span class="sql-type">DECIMAL(5,2)</span> <span class="sql-keyword">DEFAULT</span> <span class="sql-value">10.00</span>, <span class="sql-comment">/* Default 10% */</span>
+    status <span class="sql-type">ENUM</span>(<span class="sql-value">'active'</span>, <span class="sql-value">'inactive'</span>) <span class="sql-keyword">DEFAULT</span> <span class="sql-value">'active'</span>,
+    created_at <span class="sql-type">DATETIME</span> <span class="sql-keyword">DEFAULT</span> <span class="sql-keyword">CURRENT_TIMESTAMP</span>,
+    updated_at <span class="sql-type">DATETIME</span> <span class="sql-keyword">ON UPDATE</span> <span class="sql-keyword">CURRENT_TIMESTAMP</span>,
+    <span class="sql-keyword">FOREIGN KEY</span> (user_id) <span class="sql-keyword">REFERENCES</span> users(id) <span class="sql-keyword">ON DELETE CASCADE</span>
+);</code></pre>
+
+        <h3>Affiliate Referrals Table</h3>
+        <pre><code><span class="sql-keyword">CREATE TABLE</span> affiliate_referrals (
+    id <span class="sql-type">INT</span> <span class="sql-keyword">PRIMARY KEY</span> <span class="sql-keyword">AUTO_INCREMENT</span>,
+    affiliate_id <span class="sql-type">INT</span> <span class="sql-keyword">NOT NULL</span>,
+    referred_user_id <span class="sql-type">INT</span> <span class="sql-keyword">NOT NULL</span>,
+    status <span class="sql-type">ENUM</span>(<span class="sql-value">'pending'</span>, <span class="sql-value">'approved'</span>, <span class="sql-value">'rejected'</span>) <span class="sql-keyword">DEFAULT</span> <span class="sql-value">'pending'</span>,
+    created_at <span class="sql-type">DATETIME</span> <span class="sql-keyword">DEFAULT</span> <span class="sql-keyword">CURRENT_TIMESTAMP</span>,
+    updated_at <span class="sql-type">DATETIME</span> <span class="sql-keyword">ON UPDATE</span> <span class="sql-keyword">CURRENT_TIMESTAMP</span>,
+    <span class="sql-keyword">FOREIGN KEY</span> (affiliate_id) <span class="sql-keyword">REFERENCES</span> affiliates(id) <span class="sql-keyword">ON DELETE CASCADE</span>,
+    <span class="sql-keyword">FOREIGN KEY</span> (referred_user_id) <span class="sql-keyword">REFERENCES</span> users(id) <span class="sql-keyword">ON DELETE CASCADE</span>
+);</code></pre>
+
+        <h3>Affiliate Transactions Table</h3>
+        <pre><code><span class="sql-keyword">CREATE TABLE</span> affiliate_transactions (
+    id <span class="sql-type">INT</span> <span class="sql-keyword">PRIMARY KEY</span> <span class="sql-keyword">AUTO_INCREMENT</span>,
+    affiliate_id <span class="sql-type">INT</span> <span class="sql-keyword">NOT NULL</span>,
+    booking_id <span class="sql-type">INT</span> <span class="sql-keyword">NOT NULL</span>,
+    amount <span class="sql-type">DECIMAL(10,2)</span> <span class="sql-keyword">NOT NULL</span>,
+    status <span class="sql-type">ENUM</span>(<span class="sql-value">'pending'</span>, <span class="sql-value">'paid'</span>, <span class="sql-value">'cancelled'</span>) <span class="sql-keyword">DEFAULT</span> <span class="sql-value">'pending'</span>,
+    payment_date <span class="sql-type">DATETIME</span>,
+    payment_method <span class="sql-type">VARCHAR(50)</span>,
+    transaction_id <span class="sql-type">VARCHAR(255)</span>,
+    notes <span class="sql-type">TEXT</span>,
+    created_at <span class="sql-type">DATETIME</span> <span class="sql-keyword">DEFAULT</span> <span class="sql-keyword">CURRENT_TIMESTAMP</span>,
+    updated_at <span class="sql-type">DATETIME</span> <span class="sql-keyword">ON UPDATE</span> <span class="sql-keyword">CURRENT_TIMESTAMP</span>,
+    <span class="sql-keyword">FOREIGN KEY</span> (affiliate_id) <span class="sql-keyword">REFERENCES</span> affiliates(id) <span class="sql-keyword">ON DELETE CASCADE</span>,
+    <span class="sql-keyword">FOREIGN KEY</span> (booking_id) <span class="sql-keyword">REFERENCES</span> bookings(id) <span class="sql-keyword">ON DELETE CASCADE</span>
+);</code></pre>
+    </div>
+
+    <h2 id="help-desk">13. Help Desk System</h2>
+    <div class="section-content">
+        <h3>Support Categories Table</h3>
+        <pre><code><span class="sql-keyword">CREATE TABLE</span> support_categories (
+    id <span class="sql-type">INT</span> <span class="sql-keyword">PRIMARY KEY</span> <span class="sql-keyword">AUTO_INCREMENT</span>,
+    name <span class="sql-type">VARCHAR(100)</span> <span class="sql-keyword">NOT NULL</span>,
+    description <span class="sql-type">TEXT</span>,
+    status <span class="sql-type">ENUM</span>(<span class="sql-value">'active'</span>, <span class="sql-value">'inactive'</span>) <span class="sql-keyword">DEFAULT</span> <span class="sql-value">'active'</span>,
+    created_at <span class="sql-type">DATETIME</span> <span class="sql-keyword">DEFAULT</span> <span class="sql-keyword">CURRENT_TIMESTAMP</span>,
+    updated_at <span class="sql-type">DATETIME</span> <span class="sql-keyword">ON UPDATE</span> <span class="sql-keyword">CURRENT_TIMESTAMP</span>
+);</code></pre>
+
+        <h3>Support Tickets Table</h3>
+        <pre><code><span class="sql-keyword">CREATE TABLE</span> support_tickets (
+    id <span class="sql-type">INT</span> <span class="sql-keyword">PRIMARY KEY</span> <span class="sql-keyword">AUTO_INCREMENT</span>,
+    user_id <span class="sql-type">INT</span> <span class="sql-keyword">NOT NULL</span>,
+    category_id <span class="sql-type">INT</span>,
+    subject <span class="sql-type">VARCHAR(255)</span> <span class="sql-keyword">NOT NULL</span>,
+    description <span class="sql-type">TEXT</span> <span class="sql-keyword">NOT NULL</span>,
+    status <span class="sql-type">ENUM</span>(<span class="sql-value">'open'</span>, <span class="sql-value">'in_progress'</span>, <span class="sql-value">'resolved'</span>, <span class="sql-value">'closed'</span>) <span class="sql-keyword">DEFAULT</span> <span class="sql-value">'open'</span>,
+    priority <span class="sql-type">ENUM</span>(<span class="sql-value">'low'</span>, <span class="sql-value">'medium'</span>, <span class="sql-value">'high'</span>, <span class="sql-value">'urgent'</span>) <span class="sql-keyword">DEFAULT</span> <span class="sql-value">'medium'</span>,
+    assigned_to <span class="sql-type">INT</span>,
+    created_at <span class="sql-type">DATETIME</span> <span class="sql-keyword">DEFAULT</span> <span class="sql-keyword">CURRENT_TIMESTAMP</span>,
+    updated_at <span class="sql-type">DATETIME</span> <span class="sql-keyword">ON UPDATE</span> <span class="sql-keyword">CURRENT_TIMESTAMP</span>,
+    <span class="sql-keyword">FOREIGN KEY</span> (user_id) <span class="sql-keyword">REFERENCES</span> users(id) <span class="sql-keyword">ON DELETE CASCADE</span>,
+    <span class="sql-keyword">FOREIGN KEY</span> (category_id) <span class="sql-keyword">REFERENCES</span> support_categories(id) <span class="sql-keyword">ON DELETE SET NULL</span>,
+    <span class="sql-keyword">FOREIGN KEY</span> (assigned_to) <span class="sql-keyword">REFERENCES</span> users(id) <span class="sql-keyword">ON DELETE SET NULL</span>
+);</code></pre>
+
+        <h3>Support Ticket Responses Table</h3>
+        <pre><code><span class="sql-keyword">CREATE TABLE</span> support_ticket_responses (
+    id <span class="sql-type">INT</span> <span class="sql-keyword">PRIMARY KEY</span> <span class="sql-keyword">AUTO_INCREMENT</span>,
+    ticket_id <span class="sql-type">INT</span> <span class="sql-keyword">NOT NULL</span>,
+    user_id <span class="sql-type">INT</span> <span class="sql-keyword">NOT NULL</span>,
+    message <span class="sql-type">TEXT</span> <span class="sql-keyword">NOT NULL</span>,
+    is_staff_response <span class="sql-type">BOOLEAN</span> <span class="sql-keyword">DEFAULT</span> <span class="sql-value">FALSE</span>,
+    created_at <span class="sql-type">DATETIME</span> <span class="sql-keyword">DEFAULT</span> <span class="sql-keyword">CURRENT_TIMESTAMP</span>,
+    <span class="sql-keyword">FOREIGN KEY</span> (ticket_id) <span class="sql-keyword">REFERENCES</span> support_tickets(id) <span class="sql-keyword">ON DELETE CASCADE</span>,
+    <span class="sql-keyword">FOREIGN KEY</span> (user_id) <span class="sql-keyword">REFERENCES</span> users(id) <span class="sql-keyword">ON DELETE CASCADE</span>
+);</code></pre>
+
+        <h3>Support Ticket Attachments Table</h3>
+        <pre><code><span class="sql-keyword">CREATE TABLE</span> support_ticket_attachments (
+    id <span class="sql-type">INT</span> <span class="sql-keyword">PRIMARY KEY</span> <span class="sql-keyword">AUTO_INCREMENT</span>,
+    ticket_id <span class="sql-type">INT</span>,
+    response_id <span class="sql-type">INT</span>,
+    file_name <span class="sql-type">VARCHAR(255)</span> <span class="sql-keyword">NOT NULL</span>,
+    file_path <span class="sql-type">VARCHAR(255)</span> <span class="sql-keyword">NOT NULL</span>,
+    file_type <span class="sql-type">VARCHAR(100)</span>,
+    file_size <span class="sql-type">INT</span>,
+    created_at <span class="sql-type">DATETIME</span> <span class="sql-keyword">DEFAULT</span> <span class="sql-keyword">CURRENT_TIMESTAMP</span>,
+    <span class="sql-keyword">FOREIGN KEY</span> (ticket_id) <span class="sql-keyword">REFERENCES</span> support_tickets(id) <span class="sql-keyword">ON DELETE CASCADE</span>,
+    <span class="sql-keyword">FOREIGN KEY</span> (response_id) <span class="sql-keyword">REFERENCES</span> support_ticket_responses(id) <span class="sql-keyword">ON DELETE CASCADE</span>
+);</code></pre>
+    </div>
+
+    <h2 id="blog-system">14. Blog System</h2>
+    <div class="section-content">
+        <h3>Blog Categories Table</h3>
+        <pre><code><span class="sql-keyword">CREATE TABLE</span> blog_categories (
+    id <span class="sql-type">INT</span> <span class="sql-keyword">PRIMARY KEY</span> <span class="sql-keyword">AUTO_INCREMENT</span>,
+    name <span class="sql-type">VARCHAR(100)</span> <span class="sql-keyword">NOT NULL</span>,
+    slug <span class="sql-type">VARCHAR(100)</span> <span class="sql-keyword">UNIQUE NOT NULL</span>,
+    description <span class="sql-type">TEXT</span>,
+    status <span class="sql-type">ENUM</span>(<span class="sql-value">'active'</span>, <span class="sql-value">'inactive'</span>) <span class="sql-keyword">DEFAULT</span> <span class="sql-value">'active'</span>,
+    created_at <span class="sql-type">DATETIME</span> <span class="sql-keyword">DEFAULT</span> <span class="sql-keyword">CURRENT_TIMESTAMP</span>,
+    updated_at <span class="sql-type">DATETIME</span> <span class="sql-keyword">ON UPDATE</span> <span class="sql-keyword">CURRENT_TIMESTAMP</span>
+);</code></pre>
+
+        <h3>Blog Posts Table</h3>
+        <pre><code><span class="sql-keyword">CREATE TABLE</span> blog_posts (
+    id <span class="sql-type">INT</span> <span class="sql-keyword">PRIMARY KEY</span> <span class="sql-keyword">AUTO_INCREMENT</span>,
+    title <span class="sql-type">VARCHAR(255)</span> <span class="sql-keyword">NOT NULL</span>,
+    slug <span class="sql-type">VARCHAR(255)</span> <span class="sql-keyword">UNIQUE NOT NULL</span>,
+    content <span class="sql-type">TEXT</span> <span class="sql-keyword">NOT NULL</span>,
+    excerpt <span class="sql-type">TEXT</span>,
+    featured_image <span class="sql-type">VARCHAR(255)</span>,
+    author_id <span class="sql-type">INT</span> <span class="sql-keyword">NOT NULL</span>,
+    category_id <span class="sql-type">INT</span>,
+    status <span class="sql-type">ENUM</span>(<span class="sql-value">'draft'</span>, <span class="sql-value">'published'</span>, <span class="sql-value">'archived'</span>) <span class="sql-keyword">DEFAULT</span> <span class="sql-value">'draft'</span>,
+    published_at <span class="sql-type">DATETIME</span>,
+    meta_title <span class="sql-type">VARCHAR(255)</span>,
+    meta_description <span class="sql-type">TEXT</span>,
+    views <span class="sql-type">INT</span> <span class="sql-keyword">DEFAULT</span> <span class="sql-value">0</span>,
+    created_at <span class="sql-type">DATETIME</span> <span class="sql-keyword">DEFAULT</span> <span class="sql-keyword">CURRENT_TIMESTAMP</span>,
+    updated_at <span class="sql-type">DATETIME</span> <span class="sql-keyword">ON UPDATE</span> <span class="sql-keyword">CURRENT_TIMESTAMP</span>,
+    <span class="sql-keyword">FOREIGN KEY</span> (author_id) <span class="sql-keyword">REFERENCES</span> users(id) <span class="sql-keyword">ON DELETE CASCADE</span>,
+    <span class="sql-keyword">FOREIGN KEY</span> (category_id) <span class="sql-keyword">REFERENCES</span> blog_categories(id) <span class="sql-keyword">ON DELETE SET NULL</span>
+);</code></pre>
+
+        <h3>Blog Tags Table</h3>
+        <pre><code><span class="sql-keyword">CREATE TABLE</span> blog_tags (
+    id <span class="sql-type">INT</span> <span class="sql-keyword">PRIMARY KEY</span> <span class="sql-keyword">AUTO_INCREMENT</span>,
+    name <span class="sql-type">VARCHAR(50)</span> <span class="sql-keyword">NOT NULL</span>,
+    slug <span class="sql-type">VARCHAR(50)</span> <span class="sql-keyword">UNIQUE NOT NULL</span>,
+    created_at <span class="sql-type">DATETIME</span> <span class="sql-keyword">DEFAULT</span> <span class="sql-keyword">CURRENT_TIMESTAMP</span>
+);</code></pre>
+
+        <h3>Blog Post Tags Table</h3>
+        <pre><code><span class="sql-keyword">CREATE TABLE</span> blog_post_tags (
+    post_id <span class="sql-type">INT</span> <span class="sql-keyword">NOT NULL</span>,
+    tag_id <span class="sql-type">INT</span> <span class="sql-keyword">NOT NULL</span>,
+    <span class="sql-keyword">PRIMARY KEY</span> (post_id, tag_id),
+    <span class="sql-keyword">FOREIGN KEY</span> (post_id) <span class="sql-keyword">REFERENCES</span> blog_posts(id) <span class="sql-keyword">ON DELETE CASCADE</span>,
+    <span class="sql-keyword">FOREIGN KEY</span> (tag_id) <span class="sql-keyword">REFERENCES</span> blog_tags(id) <span class="sql-keyword">ON DELETE CASCADE</span>
+);</code></pre>
+
+        <h3>Blog Comments Table</h3>
+        <pre><code><span class="sql-keyword">CREATE TABLE</span> blog_comments (
+    id <span class="sql-type">INT</span> <span class="sql-keyword">PRIMARY KEY</span> <span class="sql-keyword">AUTO_INCREMENT</span>,
+    post_id <span class="sql-type">INT</span> <span class="sql-keyword">NOT NULL</span>,
+    user_id <span class="sql-type">INT</span>,
+    parent_id <span class="sql-type">INT</span>,
+    name <span class="sql-type">VARCHAR(100)</span>,
+    email <span class="sql-type">VARCHAR(255)</span>,
+    comment <span class="sql-type">TEXT</span> <span class="sql-keyword">NOT NULL</span>,
+    status <span class="sql-type">ENUM</span>(<span class="sql-value">'pending'</span>, <span class="sql-value">'approved'</span>, <span class="sql-value">'spam'</span>) <span class="sql-keyword">DEFAULT</span> <span class="sql-value">'pending'</span>,
+    created_at <span class="sql-type">DATETIME</span> <span class="sql-keyword">DEFAULT</span> <span class="sql-keyword">CURRENT_TIMESTAMP</span>,
+    updated_at <span class="sql-type">DATETIME</span> <span class="sql-keyword">ON UPDATE</span> <span class="sql-keyword">CURRENT_TIMESTAMP</span>,
+    <span class="sql-keyword">FOREIGN KEY</span> (post_id) <span class="sql-keyword">REFERENCES</span> blog_posts(id) <span class="sql-keyword">ON DELETE CASCADE</span>,
+    <span class="sql-keyword">FOREIGN KEY</span> (user_id) <span class="sql-keyword">REFERENCES</span> users(id) <span class="sql-keyword">ON DELETE SET NULL</span>,
+    <span class="sql-keyword">FOREIGN KEY</span> (parent_id) <span class="sql-keyword">REFERENCES</span> blog_comments(id) <span class="sql-keyword">ON DELETE CASCADE</span>
+);</code></pre>
+    </div>
+
+    <h2 id="cms-pages">15. CMS Pages</h2>
+    <div class="section-content">
+        <h3>Pages Table</h3>
+        <pre><code><span class="sql-keyword">CREATE TABLE</span> pages (
+    id <span class="sql-type">INT</span> <span class="sql-keyword">PRIMARY KEY</span> <span class="sql-keyword">AUTO_INCREMENT</span>,
+    title <span class="sql-type">VARCHAR(255)</span> <span class="sql-keyword">NOT NULL</span>,
+    slug <span class="sql-type">VARCHAR(255)</span> <span class="sql-keyword">UNIQUE NOT NULL</span>,
+    content <span class="sql-type">TEXT</span>,
+    meta_title <span class="sql-type">VARCHAR(255)</span>,
+    meta_description <span class="sql-type">TEXT</span>,
+    status <span class="sql-type">ENUM</span>(<span class="sql-value">'published'</span>, <span class="sql-value">'draft'</span>) <span class="sql-keyword">DEFAULT</span> <span class="sql-value">'draft'</span>,
+    created_by <span class="sql-type">INT</span>,
+    updated_by <span class="sql-type">INT</span>,
+    created_at <span class="sql-type">DATETIME</span> <span class="sql-keyword">DEFAULT</span> <span class="sql-keyword">CURRENT_TIMESTAMP</span>,
+    updated_at <span class="sql-type">DATETIME</span> <span class="sql-keyword">ON UPDATE</span> <span class="sql-keyword">CURRENT_TIMESTAMP</span>,
+    <span class="sql-keyword">FOREIGN KEY</span> (created_by) <span class="sql-keyword">REFERENCES</span> users(id) <span class="sql-keyword">ON DELETE SET NULL</span>,
+    <span class="sql-keyword">FOREIGN KEY</span> (updated_by) <span class="sql-keyword">REFERENCES</span> users(id) <span class="sql-keyword">ON DELETE SET NULL</span>
+);</code></pre>
+    </div>
+
+    <h2 id="document-management">16. Document Management</h2>
+    <div class="section-content">
+        <h3>Documents Table</h3>
+        <pre><code><span class="sql-keyword">CREATE TABLE</span> documents (
+    id <span class="sql-type">INT</span> <span class="sql-keyword">PRIMARY KEY</span> <span class="sql-keyword">AUTO_INCREMENT</span>,
+    user_id <span class="sql-type">INT</span> <span class="sql-keyword">NOT NULL</span>,
+    document_type <span class="sql-type">ENUM</span>(<span class="sql-value">'id_proof'</span>, <span class="sql-value">'address_proof'</span>, <span class="sql-value">'license'</span>, <span class="sql-value">'insurance'</span>, <span class="sql-value">'certification'</span>, <span class="sql-value">'other'</span>) <span class="sql-keyword">NOT NULL</span>,
+    title <span class="sql-type">VARCHAR(255)</span> <span class="sql-keyword">NOT NULL</span>,
+    file_path <span class="sql-type">VARCHAR(255)</span> <span class="sql-keyword">NOT NULL</span>,
+    file_type <span class="sql-type">VARCHAR(50)</span>,
+    file_size <span class="sql-type">INT</span>,
+    verification_status <span class="sql-type">ENUM</span>(<span class="sql-value">'pending'</span>, <span class="sql-value">'verified'</span>, <span class="sql-value">'rejected'</span>) <span class="sql-keyword">DEFAULT</span> <span class="sql-value">'pending'</span>,
+    verification_notes <span class="sql-type">TEXT</span>,
+    verified_by <span class="sql-type">INT</span>,
+    verified_at <span class="sql-type">DATETIME</span>,
+    created_at <span class="sql-type">DATETIME</span> <span class="sql-keyword">DEFAULT</span> <span class="sql-keyword">CURRENT_TIMESTAMP</span>,
+    updated_at <span class="sql-type">DATETIME</span> <span class="sql-keyword">ON UPDATE</span> <span class="sql-keyword">CURRENT_TIMESTAMP</span>,
+    <span class="sql-keyword">FOREIGN KEY</span> (user_id) <span class="sql-keyword">REFERENCES</span> users(id) <span class="sql-keyword">ON DELETE CASCADE</span>,
+    <span class="sql-keyword">FOREIGN KEY</span> (verified_by) <span class="sql-keyword">REFERENCES</span> users(id) <span class="sql-keyword">ON DELETE SET NULL</span>
+);</code></pre>
+    </div>
+
+    <h2 id="promotional">17. Promotional System</h2>
+    <div class="section-content">
+        <h3>Promotional Banners Table</h3>
+        <pre><code><span class="sql-keyword">CREATE TABLE</span> promotional_banners (
+    id <span class="sql-type">INT</span> <span class="sql-keyword">PRIMARY KEY</span> <span class="sql-keyword">AUTO_INCREMENT</span>,
+    title <span class="sql-type">VARCHAR(255)</span> <span class="sql-keyword">NOT NULL</span>,
+    description <span class="sql-type">TEXT</span>,
+    image_path <span class="sql-type">VARCHAR(255)</span> <span class="sql-keyword">NOT NULL</span>,
+    link <span class="sql-type">VARCHAR(255)</span>,
+    position <span class="sql-type">VARCHAR(50)</span> <span class="sql-keyword">DEFAULT</span> <span class="sql-value">'home'</span>,
+    start_date <span class="sql-type">DATETIME</span>,
+    end_date <span class="sql-type">DATETIME</span>,
+    status <span class="sql-type">ENUM</span>(<span class="sql-value">'active'</span>, <span class="sql-value">'inactive'</span>) <span class="sql-keyword">DEFAULT</span> <span class="sql-value">'active'</span>,
+    created_at <span class="sql-type">DATETIME</span> <span class="sql-keyword">DEFAULT</span> <span class="sql-keyword">CURRENT_TIMESTAMP</span>,
+    updated_at <span class="sql-type">DATETIME</span> <span class="sql-keyword">ON UPDATE</span> <span class="sql-keyword">CURRENT_TIMESTAMP</span>
+);</code></pre>
+
+        <h3>Handyman Promotional Banners Table</h3>
+        <pre><code><span class="sql-keyword">CREATE TABLE</span> handyman_promotional_banners (
+    id <span class="sql-type">INT</span> <span class="sql-keyword">PRIMARY KEY</span> <span class="sql-keyword">AUTO_INCREMENT</span>,
+    handyman_id <span class="sql-type">INT</span> <span class="sql-keyword">NOT NULL</span>,
+    title <span class="sql-type">VARCHAR(255)</span> <span class="sql-keyword">NOT NULL</span>,
+    description <span class="sql-type">TEXT</span>,
+    image_path <span class="sql-type">VARCHAR(255)</span> <span class="sql-keyword">NOT NULL</span>,
+    link <span class="sql-type">VARCHAR(255)</span>,
+    start_date <span class="sql-type">DATETIME</span>,
+    end_date <span class="sql-type">DATETIME</span>,
+    status <span class="sql-type">ENUM</span>(<span class="sql-value">'active'</span>, <span class="sql-value">'inactive'</span>) <span class="sql-keyword">DEFAULT</span> <span class="sql-value">'active'</span>,
+    created_at <span class="sql-type">DATETIME</span> <span class="sql-keyword">DEFAULT</span> <span class="sql-keyword">CURRENT_TIMESTAMP</span>,
+    updated_at <span class="sql-type">DATETIME</span> <span class="sql-keyword">ON UPDATE</span> <span class="sql-keyword">CURRENT_TIMESTAMP</span>,
+    <span class="sql-keyword">FOREIGN KEY</span> (handyman_id) <span class="sql-keyword">REFERENCES</span> handyman_profiles(id) <span class="sql-keyword">ON DELETE CASCADE</span>
+);</code></pre>
+    </div>
+
+    <h2 id="coupon-discount">18. Coupon & Discount System</h2>
+    <div class="section-content">
+        <h3>Coupons Table</h3>
+        <pre><code><span class="sql-keyword">CREATE TABLE</span> coupons (
+    id <span class="sql-type">INT</span> <span class="sql-keyword">PRIMARY KEY</span> <span class="sql-keyword">AUTO_INCREMENT</span>,
+    code <span class="sql-type">VARCHAR(50)</span> <span class="sql-keyword">UNIQUE NOT NULL</span>,
+    description <span class="sql-type">TEXT</span>,
+    discount_type <span class="sql-type">ENUM</span>(<span class="sql-value">'percentage'</span>, <span class="sql-value">'fixed'</span>) <span class="sql-keyword">NOT NULL</span>,
+    discount_value <span class="sql-type">DECIMAL(10,2)</span> <span class="sql-keyword">NOT NULL</span>,
+    min_order_amount <span class="sql-type">DECIMAL(10,2)</span>,
+    max_discount_amount <span class="sql-type">DECIMAL(10,2)</span>,
+    start_date <span class="sql-type">DATETIME</span>,
+    end_date <span class="sql-type">DATETIME</span>,
+    usage_limit <span class="sql-type">INT</span>,
+    usage_count <span class="sql-type">INT</span> <span class="sql-keyword">DEFAULT</span> <span class="sql-value">0</span>,
+    is_first_order_only <span class="sql-type">BOOLEAN</span> <span class="sql-keyword">DEFAULT</span> <span class="sql-value">FALSE</span>,
+    status <span class="sql-type">ENUM</span>(<span class="sql-value">'active'</span>, <span class="sql-value">'inactive'</span>) <span class="sql-keyword">DEFAULT</span> <span class="sql-value">'active'</span>,
+    created_at <span class="sql-type">DATETIME</span> <span class="sql-keyword">DEFAULT</span> <span class="sql-keyword">CURRENT_TIMESTAMP</span>,
+    updated_at <span class="sql-type">DATETIME</span> <span class="sql-keyword">ON UPDATE</span> <span class="sql-keyword">CURRENT_TIMESTAMP</span>
+);</code></pre>
+
+        <h3>Coupon Services Table</h3>
+        <pre><code><span class="sql-keyword">CREATE TABLE</span> coupon_services (
+    coupon_id <span class="sql-type">INT</span> <span class="sql-keyword">NOT NULL</span>,
+    service_id <span class="sql-type">INT</span> <span class="sql-keyword">NOT NULL</span>,
+    <span class="sql-keyword">PRIMARY KEY</span> (coupon_id, service_id),
+    <span class="sql-keyword">FOREIGN KEY</span> (coupon_id) <span class="sql-keyword">REFERENCES</span> coupons(id) <span class="sql-keyword">ON DELETE CASCADE</span>,
+    <span class="sql-keyword">FOREIGN KEY</span> (service_id) <span class="sql-keyword">REFERENCES</span> services(id) <span class="sql-keyword">ON DELETE CASCADE</span>
+);</code></pre>
+
+        <h3>Coupon Categories Table</h3>
+        <pre><code><span class="sql-keyword">CREATE TABLE</span> coupon_categories (
+    coupon_id <span class="sql-type">INT</span> <span class="sql-keyword">NOT NULL</span>,
+    category_id <span class="sql-type">INT</span> <span class="sql-keyword">NOT NULL</span>,
+    <span class="sql-keyword">PRIMARY KEY</span> (coupon_id, category_id),
+    <span class="sql-keyword">FOREIGN KEY</span> (coupon_id) <span class="sql-keyword">REFERENCES</span> coupons(id) <span class="sql-keyword">ON DELETE CASCADE</span>,
+    <span class="sql-keyword">FOREIGN KEY</span> (category_id) <span class="sql-keyword">REFERENCES</span> service_categories(id) <span class="sql-keyword">ON DELETE CASCADE</span>
+);</code></pre>
+
+        <h3>Coupon Usage Table</h3>
+        <pre><code><span class="sql-keyword">CREATE TABLE</span> coupon_usage (
+    id <span class="sql-type">INT</span> <span class="sql-keyword">PRIMARY KEY</span> <span class="sql-keyword">AUTO_INCREMENT</span>,
+    coupon_id <span class="sql-type">INT</span> <span class="sql-keyword">NOT NULL</span>,
+    user_id <span class="sql-type">INT</span> <span class="sql-keyword">NOT NULL</span>,
+    booking_id <span class="sql-type">INT</span> <span class="sql-keyword">NOT NULL</span>,
+    discount_amount <span class="sql-type">DECIMAL(10,2)</span> <span class="sql-keyword">NOT NULL</span>,
+    created_at <span class="sql-type">DATETIME</span> <span class="sql-keyword">DEFAULT</span> <span class="sql-keyword">CURRENT_TIMESTAMP</span>,
+    <span class="sql-keyword">FOREIGN KEY</span> (coupon_id) <span class="sql-keyword">REFERENCES</span> coupons(id) <span class="sql-keyword">ON DELETE CASCADE</span>,
+    <span class="sql-keyword">FOREIGN KEY</span> (user_id) <span class="sql-keyword">REFERENCES</span> users(id) <span class="sql-keyword">ON DELETE CASCADE</span>,
+    <span class="sql-keyword">FOREIGN KEY</span> (booking_id) <span class="sql-keyword">REFERENCES</span> bookings(id) <span class="sql-keyword">ON DELETE CASCADE</span>
+);</code></pre>
+    </div>
+
+    <h2 id="favorites">19. Favorites & Bookmarks</h2>
+    <div class="section-content">
+        <h3>Favorites Table</h3>
+        <pre><code><span class="sql-keyword">CREATE TABLE</span> favorites (
+    id <span class="sql-type">INT</span> <span class="sql-keyword">PRIMARY KEY</span> <span class="sql-keyword">AUTO_INCREMENT</span>,
+    user_id <span class="sql-type">INT</span> <span class="sql-keyword">NOT NULL</span>,
+    handyman_id <span class="sql-type">INT</span>,
+    service_id <span class="sql-type">INT</span>,
+    created_at <span class="sql-type">DATETIME</span> <span class="sql-keyword">DEFAULT</span> <span class="sql-keyword">CURRENT_TIMESTAMP</span>,
+    <span class="sql-keyword">FOREIGN KEY</span> (user_id) <span class="sql-keyword">REFERENCES</span> users(id) <span class="sql-keyword">ON DELETE CASCADE</span>,
+    <span class="sql-keyword">FOREIGN KEY</span> (handyman_id) <span class="sql-keyword">REFERENCES</span> handyman_profiles(id) <span class="sql-keyword">ON DELETE CASCADE</span>,
+    <span class="sql-keyword">FOREIGN KEY</span> (service_id) <span class="sql-keyword">REFERENCES</span> services(id) <span class="sql-keyword">ON DELETE CASCADE</span>,
+    <span class="sql-keyword">CONSTRAINT</span> check_favorite_type <span class="sql-keyword">CHECK</span> (
+        (handyman_id <span class="sql-keyword">IS NOT NULL</span> <span class="sql-keyword">AND</span> service_id <span class="sql-keyword">IS NULL</span>) <span class="sql-keyword">OR</span>
+        (handyman_id <span class="sql-keyword">IS NULL</span> <span class="sql-keyword">AND</span> service_id <span class="sql-keyword">IS NOT NULL</span>)
+    )
+);</code></pre>
+    </div>
+
+    <h2 id="system-settings">20. System Settings</h2>
+    <div class="section-content">
+        <h3>Settings Table</h3>
+        <pre><code><span class="sql-keyword">CREATE TABLE</span> settings (
+    id <span class="sql-type">INT</span> <span class="sql-keyword">PRIMARY KEY</span> <span class="sql-keyword">AUTO_INCREMENT</span>,
+    group_name <span class="sql-type">VARCHAR(100)</span> <span class="sql-keyword">NOT NULL</span>,
+    setting_key <span class="sql-type">VARCHAR(100)</span> <span class="sql-keyword">NOT NULL</span>,
+    setting_value <span class="sql-type">TEXT</span>,
+    field_type <span class="sql-type">ENUM</span>(<span class="sql-value">'text'</span>, <span class="sql-value">'textarea'</span>, <span class="sql-value">'select'</span>, <span class="sql-value">'checkbox'</span>, <span class="sql-value">'radio'</span>, <span class="sql-value">'file'</span>, <span class="sql-value">'color'</span>, <span class="sql-value">'number'</span>, <span class="sql-value">'date'</span>, <span class="sql-value">'time'</span>, <span class="sql-value">'datetime'</span>, <span class="sql-value">'json'</span>) <span class="sql-keyword">DEFAULT</span> <span class="sql-value">'text'</span>,
+    options <span class="sql-type">TEXT</span> <span class="sql-comment">/* JSON array of options for select, checkbox, radio */</span>,
+    is_public <span class="sql-type">BOOLEAN</span> <span class="sql-keyword">DEFAULT</span> <span class="sql-value">FALSE</span>,
+    created_at <span class="sql-type">DATETIME</span> <span class="sql-keyword">DEFAULT</span> <span class="sql-keyword">CURRENT_TIMESTAMP</span>,
+    updated_at <span class="sql-type">DATETIME</span> <span class="sql-keyword">ON UPDATE</span> <span class="sql-keyword">CURRENT_TIMESTAMP</span>,
+    <span class="sql-keyword">UNIQUE KEY</span> (group_name, setting_key)
+);</code></pre>
+    </div>
+
+    <h2 id="language-translation">21. Language & Translation</h2>
+    <div class="section-content">
+        <h3>Languages Table</h3>
+        <pre><code><span class="sql-keyword">CREATE TABLE</span> languages (
+    id <span class="sql-type">INT</span> <span class="sql-keyword">PRIMARY KEY</span> <span class="sql-keyword">AUTO_INCREMENT</span>,
+    name <span class="sql-type">VARCHAR(100)</span> <span class="sql-keyword">NOT NULL</span>,
+    code <span class="sql-type">VARCHAR(10)</span> <span class="sql-keyword">NOT NULL UNIQUE</span>,
+    flag <span class="sql-type">VARCHAR(255)</span>,
+    is_rtl <span class="sql-type">BOOLEAN</span> <span class="sql-keyword">DEFAULT</span> <span class="sql-value">FALSE</span>,
+    is_default <span class="sql-type">BOOLEAN</span> <span class="sql-keyword">DEFAULT</span> <span class="sql-value">FALSE</span>,
+    status <span class="sql-type">ENUM</span>(<span class="sql-value">'active'</span>, <span class="sql-value">'inactive'</span>) <span class="sql-keyword">DEFAULT</span> <span class="sql-value">'active'</span>,
+    created_at <span class="sql-type">DATETIME</span> <span class="sql-keyword">DEFAULT</span> <span class="sql-keyword">CURRENT_TIMESTAMP</span>,
+    updated_at <span class="sql-type">DATETIME</span> <span class="sql-keyword">ON UPDATE</span> <span class="sql-keyword">CURRENT_TIMESTAMP</span>
+);</code></pre>
+
+        <h3>Translations Table</h3>
+        <pre><code><span class="sql-keyword">CREATE TABLE</span> translations (
+    id <span class="sql-type">INT</span> <span class="sql-keyword">PRIMARY KEY</span> <span class="sql-keyword">AUTO_INCREMENT</span>,
+    language_id <span class="sql-type">INT</span> <span class="sql-keyword">NOT NULL</span>,
+    translation_key <span class="sql-type">VARCHAR(255)</span> <span class="sql-keyword">NOT NULL</span>,
+    translation_value <span class="sql-type">TEXT</span> <span class="sql-keyword">NOT NULL</span>,
+    created_at <span class="sql-type">DATETIME</span> <span class="sql-keyword">DEFAULT</span> <span class="sql-keyword">CURRENT_TIMESTAMP</span>,
+    updated_at <span class="sql-type">DATETIME</span> <span class="sql-keyword">ON UPDATE</span> <span class="sql-keyword">CURRENT_TIMESTAMP</span>,
+    <span class="sql-keyword">UNIQUE KEY</span> (language_id, translation_key),
+    <span class="sql-keyword">FOREIGN KEY</span> (language_id) <span class="sql-keyword">REFERENCES</span> languages(id) <span class="sql-keyword">ON DELETE CASCADE</span>
+);</code></pre>
+    </div>
+
+    <h2 id="social-media">22. Social Media Integration</h2>
+    <div class="section-content">
+        <h3>Social Media Accounts Table</h3>
+        <pre><code><span class="sql-keyword">CREATE TABLE</span> social_media_accounts (
+    id <span class="sql-type">INT</span> <span class="sql-keyword">PRIMARY KEY</span> <span class="sql-keyword">AUTO_INCREMENT</span>,
+    user_id <span class="sql-type">INT</span> <span class="sql-keyword">NOT NULL</span>,
+    provider <span class="sql-type">ENUM</span>(<span class="sql-value">'google'</span>, <span class="sql-value">'facebook'</span>, <span class="sql-value">'apple'</span>, <span class="sql-value">'twitter'</span>, <span class="sql-value">'linkedin'</span>) <span class="sql-keyword">NOT NULL</span>,
+    provider_user_id <span class="sql-type">VARCHAR(255)</span> <span class="sql-keyword">NOT NULL</span>,
+    access_token <span class="sql-type">TEXT</span>,
+    refresh_token <span class="sql-type">TEXT</span>,
+    token_expires_at <span class="sql-type">DATETIME</span>,
+    created_at <span class="sql-type">DATETIME</span> <span class="sql-keyword">DEFAULT</span> <span class="sql-keyword">CURRENT_TIMESTAMP</span>,
+    updated_at <span class="sql-type">DATETIME</span> <span class="sql-keyword">ON UPDATE</span> <span class="sql-keyword">CURRENT_TIMESTAMP</span>,
+    <span class="sql-keyword">UNIQUE KEY</span> (user_id, provider),
+    <span class="sql-keyword">FOREIGN KEY</span> (user_id) <span class="sql-keyword">REFERENCES</span> users(id) <span class="sql-keyword">ON DELETE CASCADE</span>
+);</code></pre>
+    </div>
+
+    <h2 id="reports-analytics">23. Reports & Analytics</h2>
+    <div class="section-content">
+        <h3>Reports Table</h3>
+        <pre><code><span class="sql-keyword">CREATE TABLE</span> reports (
+    id <span class="sql-type">INT</span> <span class="sql-keyword">PRIMARY KEY</span> <span class="sql-keyword">AUTO_INCREMENT</span>,
+    name <span class="sql-type">VARCHAR(255)</span> <span class="sql-keyword">NOT NULL</span>,
+    description <span class="sql-type">TEXT</span>,
+    query <span class="sql-type">TEXT</span> <span class="sql-keyword">NOT NULL</span>,
+    parameters <span class="sql-type">TEXT</span> <span class="sql-comment">/* JSON array of parameters */</span>,
+    created_by <span class="sql-type">INT</span>,
+    is_system <span class="sql-type">BOOLEAN</span> <span class="sql-keyword">DEFAULT</span> <span class="sql-value">FALSE</span>,
+    created_at <span class="sql-type">DATETIME</span> <span class="sql-keyword">DEFAULT</span> <span class="sql-keyword">CURRENT_TIMESTAMP</span>,
+    updated_at <span class="sql-type">DATETIME</span> <span class="sql-keyword">ON UPDATE</span> <span class="sql-keyword">CURRENT_TIMESTAMP</span>,
+    <span class="sql-keyword">FOREIGN KEY</span> (created_by) <span class="sql-keyword">REFERENCES</span> users(id) <span class="sql-keyword">ON DELETE SET NULL</span>
+);</code></pre>
+
+        <h3>Report Schedules Table</h3>
+        <pre><code><span class="sql-keyword">CREATE TABLE</span> report_schedules (
+    id <span class="sql-type">INT</span> <span class="sql-keyword">PRIMARY KEY</span> <span class="sql-keyword">AUTO_INCREMENT</span>,
+    report_id <span class="sql-type">INT</span> <span class="sql-keyword">NOT NULL</span>,
+    name <span class="sql-type">VARCHAR(255)</span> <span class="sql-keyword">NOT NULL</span>,
+    frequency <span class="sql-type">ENUM</span>(<span class="sql-value">'daily'</span>, <span class="sql-value">'weekly'</span>, <span class="sql-value">'monthly'</span>, <span class="sql-value">'quarterly'</span>) <span class="sql-keyword">NOT NULL</span>,
+    recipients <span class="sql-type">TEXT</span> <span class="sql-keyword">NOT NULL</span> <span class="sql-comment">/* JSON array of email addresses */</span>,
+    parameters <span class="sql-type">TEXT</span> <span class="sql-comment">/* JSON object of parameter values */</span>,
+    last_run <span class="sql-type">DATETIME</span>,
+    next_run <span class="sql-type">DATETIME</span>,
+    status <span class="sql-type">ENUM</span>(<span class="sql-value">'active'</span>, <span class="sql-value">'inactive'</span>) <span class="sql-keyword">DEFAULT</span> <span class="sql-value">'active'</span>,
+    created_by <span class="sql-type">INT</span>,
+    created_at <span class="sql-type">DATETIME</span> <span class="sql-keyword">DEFAULT</span> <span class="sql-keyword">CURRENT_TIMESTAMP</span>,
+    updated_at <span class="sql-type">DATETIME</span> <span class="sql-keyword">ON UPDATE</span> <span class="sql-keyword">CURRENT_TIMESTAMP</span>,
+    <span class="sql-keyword">FOREIGN KEY</span> (report_id) <span class="sql-keyword">REFERENCES</span> reports(id) <span class="sql-keyword">ON DELETE CASCADE</span>,
+    <span class="sql-keyword">FOREIGN KEY</span> (created_by) <span class="sql-keyword">REFERENCES</span> users(id) <span class="sql-keyword">ON DELETE SET NULL</span>
+);</code></pre>
+    </div>
+
+    <h2 id="audit-logs">24. Audit Logs</h2>
+    <div class="section-content">
+        <h3>Audit Logs Table</h3>
+        <pre><code><span class="sql-keyword">CREATE TABLE</span> audit_logs (
+    id <span class="sql-type">INT</span> <span class="sql-keyword">PRIMARY KEY</span> <span class="sql-keyword">AUTO_INCREMENT</span>,
+    user_id <span class="sql-type">INT</span>,
+    action <span class="sql-type">VARCHAR(100)</span> <span class="sql-keyword">NOT NULL</span>,
+    entity_type <span class="sql-type">VARCHAR(100)</span> <span class="sql-keyword">NOT NULL</span>,
+    entity_id <span class="sql-type">INT</span>,
+    old_values <span class="sql-type">TEXT</span> <span class="sql-comment">/* JSON object of old values */</span>,
+    new_values <span class="sql-type">TEXT</span> <span class="sql-comment">/* JSON object of new values */</span>,
+    ip_address <span class="sql-type">VARCHAR(45)</span>,
+    user_agent <span class="sql-type">TEXT</span>,
+    created_at <span class="sql-type">DATETIME</span> <span class="sql-keyword">DEFAULT</span> <span class="sql-keyword">CURRENT_TIMESTAMP</span>,
+    <span class="sql-keyword">FOREIGN KEY</span> (user_id) <span class="sql-keyword">REFERENCES</span> users(id) <span class="sql-keyword">ON DELETE SET NULL</span>
+);</code></pre>
+    </div>
+
+    <h2 id="database-indexes">25. Database Indexes</h2>
+    <div class="section-content">
+        <pre><code><span class="sql-comment">-- Create indexes for better performance</span>
+<span class="sql-keyword">CREATE INDEX</span> idx_users_email <span class="sql-keyword">ON</span> users(email);
+<span class="sql-keyword">CREATE INDEX</span> idx_users_role <span class="sql-keyword">ON</span> users(role);
+<span class="sql-keyword">CREATE INDEX</span> idx_users_status <span class="sql-keyword">ON</span> users(status);
+<span class="sql-keyword">CREATE INDEX</span> idx_handyman_profiles_user_id <span class="sql-keyword">ON</span> handyman_profiles(user_id);
+<span class="sql-keyword">CREATE INDEX</span> idx_handyman_profiles_verification_status <span class="sql-keyword">ON</span> handyman_profiles(verification_status);
+<span class="sql-keyword">CREATE INDEX</span> idx_services_handyman_id <span class="sql-keyword">ON</span> services(handyman_id);
+<span class="sql-keyword">CREATE INDEX</span> idx_services_category_id <span class="sql-keyword">ON</span> services(category_id);
+<span class="sql-keyword">CREATE INDEX</span> idx_services_status <span class="sql-keyword">ON</span> services(status);
+<span class="sql-keyword">CREATE INDEX</span> idx_bookings_service_id <span class="sql-keyword">ON</span> bookings(service_id);
+<span class="sql-keyword">CREATE INDEX</span> idx_bookings_customer_id <span class="sql-keyword">ON</span> bookings(customer_id);
+<span class="sql-keyword">CREATE INDEX</span> idx_bookings_handyman_id <span class="sql-keyword">ON</span> bookings(handyman_id);
+<span class="sql-keyword">CREATE INDEX</span> idx_bookings_status <span class="sql-keyword">ON</span> bookings(status);
+<span class="sql-keyword">CREATE INDEX</span> idx_bookings_booking_date <span class="sql-keyword">ON</span> bookings(booking_date);
+<span class="sql-keyword">CREATE INDEX</span> idx_payments_booking_id <span class="sql-keyword">ON</span> payments(booking_id);
+<span class="sql-keyword">CREATE INDEX</span> idx_payments_status <span class="sql-keyword">ON</span> payments(status);
+<span class="sql-keyword">CREATE INDEX</span> idx_reviews_booking_id <span class="sql-keyword">ON</span> reviews(booking_id);
+<span class="sql-keyword">CREATE INDEX</span> idx_reviews_customer_id <span class="sql-keyword">ON</span> reviews(customer_id);
+<span class="sql-keyword">CREATE INDEX</span> idx_reviews_handyman_id <span class="sql-keyword">ON</span> reviews(handyman_id);
+<span class="sql-keyword">CREATE INDEX</span> idx_messages_sender_id <span class="sql-keyword">ON</span> messages(sender_id);
+<span class="sql-keyword">CREATE INDEX</span> idx_messages_receiver_id <span class="sql-keyword">ON</span> messages(receiver_id);
+<span class="sql-keyword">CREATE INDEX</span> idx_notifications_user_id <span class="sql-keyword">ON</span> notifications(user_id);
+<span class="sql-keyword">CREATE INDEX</span> idx_notifications_is_read <span class="sql-keyword">ON</span> notifications(is_read);
+<span class="sql-keyword">CREATE INDEX</span> idx_email_logs_recipient_id <span class="sql-keyword">ON</span> email_logs(recipient_id);
+<span class="sql-keyword">CREATE INDEX</span> idx_email_logs_status <span class="sql-keyword">ON</span> email_logs(status);
+<span class="sql-keyword">CREATE INDEX</span> idx_support_tickets_user_id <span class="sql-keyword">ON</span> support_tickets(user_id);
+<span class="sql-keyword">CREATE INDEX</span> idx_support_tickets_status <span class="sql-keyword">ON</span> support_tickets(status);
+<span class="sql-keyword">CREATE INDEX</span> idx_blog_posts_author_id <span class="sql-keyword">ON</span> blog_posts(author_id);
+<span class="sql-keyword">CREATE INDEX</span> idx_blog_posts_status <span class="sql-keyword">ON</span> blog_posts(status);
+<span class="sql-keyword">CREATE INDEX</span> idx_blog_posts_slug <span class="sql-keyword">ON</span> blog_posts(slug);
+<span class="sql-keyword">CREATE INDEX</span> idx_pages_slug <span class="sql-keyword">ON</span> pages(slug);
+<span class="sql-keyword">CREATE INDEX</span> idx_documents_user_id <span class="sql-keyword">ON</span> documents(user_id);
+<span class="sql-keyword">CREATE INDEX</span> idx_documents_verification_status <span class="sql-keyword">ON</span> documents(verification_status);
+<span class="sql-keyword">CREATE INDEX</span> idx_settings_group_name <span class="sql-keyword">ON</span> settings(group_name);
+<span class="sql-keyword">CREATE INDEX</span> idx_settings_setting_key <span class="sql-keyword">ON</span> settings(setting_key);
+<span class="sql-keyword">CREATE INDEX</span> idx_wallet_transactions_wallet_id <span class="sql-keyword">ON</span> wallet_transactions(wallet_id);
+<span class="sql-keyword">CREATE INDEX</span> idx_wallet_transactions_status <span class="sql-keyword">ON</span> wallet_transactions(status);
+<span class="sql-keyword">CREATE INDEX</span> idx_affiliates_user_id <span class="sql-keyword">ON</span> affiliates(user_id);
+<span class="sql-keyword">CREATE INDEX</span> idx_affiliate_referrals_affiliate_id <span class="sql-keyword">ON</span> affiliate_referrals(affiliate_id);
+<span class="sql-keyword">CREATE INDEX</span> idx_affiliate_transactions_affiliate_id <span class="sql-keyword">ON</span> affiliate_transactions(affiliate_id);
+<span class="sql-keyword">CREATE INDEX</span> idx_user_subscriptions_user_id <span class="sql-keyword">ON</span> user_subscriptions(user_id);
+<span class="sql-keyword">CREATE INDEX</span> idx_user_subscriptions_status <span class="sql-keyword">ON</span> user_subscriptions(status);</code></pre>
+    </div>
+
+    <a href="#" class="back-to-top">↑</a>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Toggle sections
+            const headings = document.querySelectorAll('h2');
+            headings.forEach(heading => {
+                heading.addEventListener('click', function() {
+                    this.classList.toggle('active');
+                });
+            });
+
+            // Back to top button
+            const backToTopButton = document.querySelector('.back-to-top');
+            window.addEventListener('scroll', function() {
+                if (window.pageYOffset > 300) {
+                    backToTopButton.style.display = 'block';
+                } else {
+                    backToTopButton.style.display = 'none';
+                }
+            });
+
+            backToTopButton.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+
+            // Expand first section by default
+            if (headings.length > 0) {
+                headings[0].classList.add('active');
+            }
+        });
+    </script>
+</body>
+</html>
